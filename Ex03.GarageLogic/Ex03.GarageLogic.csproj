@@ -48,6 +48,8 @@
     <Compile Include="ElectricCar.cs" />
     <Compile Include="ElectricMotorcycle.cs" />
     <Compile Include="ElectricVehicle.cs" />
+    <Compile Include="GarageManager.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="RegularCar.cs" />
     <Compile Include="RegularMotorcycle.cs" />
     <Compile Include="RegularTruck.cs" />
@@ -56,6 +58,12 @@
     <Compile Include="Vehicle.cs" />
     <Compile Include="VehicleCreator.cs" />
     <Compile Include="Wheel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Ex03.ConsoleUI\Ex03.ConsoleUI.csproj">
+      <Project>{f4942b85-0f9a-42f2-b845-8bd191b5c051}</Project>
+      <Name>Ex03.ConsoleUI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
