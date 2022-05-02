@@ -9,8 +9,23 @@
        private string m_ModelName;
        private string m_LicensePlateNumber;
        private float m_PrecentEnergy;
+       //private int m_NumOfWheels;
        private List<Wheel> m_CollectionOfWheels;
        private Customer m_Owner;
+
+        public Vehicle(string i_ModelName, string i_LicensePlateNumber, float i_PrecentEnergy, Customer i_Owner,int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
+        {
+           ModelName = i_ModelName;
+           LicensePlateNumber = i_LicensePlateNumber;
+           PrecentEnergy = i_PrecentEnergy;
+           Owner = i_Owner;
+           m_CollectionOfWheels = new List<Wheel>(i_NumOfWheels);
+           for(int i = 0; i < i_NumOfWheels; i++)
+           {
+                m_CollectionOfWheels.Add(new Wheel(i_ManufacturerName, i_CurrentAirPressure, i_MaxAirPressure));
+           }
+
+        }
 
        public string ModelName
        {
