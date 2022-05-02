@@ -8,7 +8,7 @@
         Soler
     }
 
-    internal class RegularVehicle: Vehicle
+    internal class FuelEngine
     {
         private float m_CurrentFuel;
         private float m_MaxFuel;
