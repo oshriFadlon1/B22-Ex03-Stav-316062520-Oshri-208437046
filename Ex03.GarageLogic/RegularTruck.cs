@@ -1,8 +1,7 @@
 ﻿namespace Ex03.GarageLogic
 {
-    internal class RegularTruck
+    public class RegularTruck : Truck
     {
-        private Truck m_Truck = new Truck();
         private FuelEngine m_FuelEngine = new FuelEngine();
 
     }
