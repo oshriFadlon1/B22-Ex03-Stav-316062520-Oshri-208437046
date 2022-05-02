@@ -35,7 +35,7 @@
 
             set
             {
-                m_CurrentAirPressure = value;
+                InflateWheel(value);
             }
         }
 
@@ -52,16 +52,21 @@
             }
         }
 
-        void InflateWheel(float i_HowMuchAirToAdd)
+        public void InflateWheel(float i_HowMuchAirToAdd)
         {
-            if (m_MaxAirPressure >= i_HowMuchAirToAdd + m_CurrentAirPressure)
+            if (this.m_MaxAirPressure >= i_HowMuchAirToAdd + this.m_CurrentAirPressure)
             {
-                m_CurrentAirPressure += i_HowMuchAirToAdd;
+                this.m_CurrentAirPressure += i_HowMuchAirToAdd;
             }
             else
             {
-                // Exception
+                throw new ValueOutOfRangeException(this.m_MaxAirPressure - this.m_CurrentAirPressure, 0);
             }
+        }
+
+        public void InflationWheelAirToMax()
+        {
+            InflateWheel(this.m_MaxAirPressure - this.m_CurrentAirPressure);
         }
     }
 }
