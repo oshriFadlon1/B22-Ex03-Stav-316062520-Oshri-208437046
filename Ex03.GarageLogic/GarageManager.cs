@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
-    using Ex03.ConsoleUI;
+    using System.Collections.Generic;
+
     public class GarageManager
     {
         private List<Vehicle> m_VehiclesList;
@@ -28,5 +23,7 @@ namespace Ex03.GarageLogic
         {
            m_VehiclesList.Add(vehicle);
         }
+
+        public 
     }
 }

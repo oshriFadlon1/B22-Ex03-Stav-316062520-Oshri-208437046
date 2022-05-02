@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
     public class Truck : Vehicle
     {
@@ -24,24 +18,26 @@ namespace Ex03.GarageLogic
         public bool IsDrivesRefrigeratedContents
         {
             get
-            { 
+            {
                 return m_IsDrivesRefrigeratedContents;
             }
-            set 
-            { 
+
+            set
+            {
                 m_IsDrivesRefrigeratedContents = value;
-            } 
+            }
         }
 
         public float CargoVolume
         {
             get
-            { 
+            {
                 return m_CargoVolume;
             }
+
             set
-            { 
-                m_CargoVolume = value; 
+            {
+                m_CargoVolume = value;
             }
         }
     }

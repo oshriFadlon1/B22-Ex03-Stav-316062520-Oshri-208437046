@@ -25,7 +25,7 @@
 
         public Car(string i_ModelName, string i_LicensePlateNumber, float i_PrecentEnergy, Customer i_Owner,
             int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors)
-            :base(i_ModelName, i_LicensePlateNumber, i_PrecentEnergy, i_Owner, k_CarNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_MaxAirPressure)
+            : base(i_ModelName, i_LicensePlateNumber, i_PrecentEnergy, i_Owner, k_CarNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_CarMaxAirPressure)
         {
             CarColor = i_CarColor;
             NumberOfDoors = i_NumberOfDoors;
@@ -37,6 +37,7 @@
             {
                 return m_CarColor;
             }
+
             set
             {
                 m_CarColor = value;
@@ -49,6 +50,7 @@
             {
                 return m_NumberOfDoors;
             }
+
             set
             {
                 m_NumberOfDoors = value;

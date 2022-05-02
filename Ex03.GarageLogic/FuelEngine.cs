@@ -14,6 +14,13 @@
         private float m_MaxFuel;
         private eFuelType m_Fuel;
 
+        public FuelEngine(float i_CurrentFuel, float i_MaxFuel, eFuelType i_Fuel)
+        {
+            m_CurrentFuel = i_CurrentFuel;
+            m_MaxFuel = i_MaxFuel;
+            this.m_Fuel = i_Fuel;
+        }
+
         public float CurrentFuel
         {
             get
@@ -53,15 +60,19 @@
             }
         }
 
-        public void Refuel(float i_AmountOfFuel)
+        public void Refuel(float i_AmountOfFuel, eFuelType i_FuelToFill)
         {
-            if (m_MaxFuel >= m_CurrentFuel + i_AmountOfFuel)
+            if (this.m_Fuel != i_FuelToFill || i_AmountOfFuel < 0)
+            {
+                throw new System.ArgumentException();
+            }
+            else if (m_MaxFuel >= m_CurrentFuel + i_AmountOfFuel) // have the same fuel and the amount is positive
             {
                 m_CurrentFuel += i_AmountOfFuel;
             }
             else
             {
-                // exception
+                throw new ValueOutOfRangeException(m_MaxFuel - m_CurrentFuel, 0);
             }
         }
     }

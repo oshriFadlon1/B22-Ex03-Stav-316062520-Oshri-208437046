@@ -58,7 +58,7 @@
 
             if (userChoice <= 0 || userChoice > 8)
             {
-                throw new Ex03.GarageLogic.ValueOutOfRangeException("Your choice isn't one of the options", 1, 8);
+                throw new Ex03.GarageLogic.ValueOutOfRangeException(1, 8);
             }
 
             io_UserChoice = (eMenuOption)userChoice;
@@ -102,7 +102,6 @@
             }
             else
             {
-
                 //AddNewVehicle(i_LisencePlateNumber); - LogicMethod
             }
         }

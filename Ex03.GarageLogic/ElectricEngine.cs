@@ -5,6 +5,12 @@
         private float m_BatteryTimeLeft;
         private float m_MaxBatteryTime;
 
+        public ElectricEngine(float i_BatteryTimeLeft, float i_MaxBatteryTime)
+        {
+            m_BatteryTimeLeft = i_BatteryTimeLeft;
+            m_MaxBatteryTime = i_MaxBatteryTime;
+        }
+
         float BatteryTimeLeft
         {
             get
@@ -14,7 +20,7 @@
 
             set
             {
-                m_BatteryTimeLeft = value;
+                ChargeTheBattery(value);
             }
         }
 
@@ -33,13 +39,14 @@
 
         public void ChargeTheBattery(float i_AmountOfTimeToCharge)
         {
-            if (m_MaxBatteryTime >= m_BatteryTimeLeft + i_AmountOfTimeToCharge)
+            float hoursTocharge = i_AmountOfTimeToCharge / 60f;
+            if (m_MaxBatteryTime >= m_BatteryTimeLeft + hoursTocharge)
             {
-                m_BatteryTimeLeft += i_AmountOfTimeToCharge;
+                m_BatteryTimeLeft += hoursTocharge;
             }
             else
             {
-                // exception
+                throw new ValueOutOfRangeException(m_MaxBatteryTime - m_BatteryTimeLeft, 0);
             }
         }
     }
