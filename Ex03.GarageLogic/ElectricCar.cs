@@ -2,6 +2,8 @@
 {
     public class ElectricCar : Car
     {
-        private ElectricEngine m_Engine = new ElectricEngine();
+        private ElectricEngine m_CarElectricEngine;
+
+
     }
 }
