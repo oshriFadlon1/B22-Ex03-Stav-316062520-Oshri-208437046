@@ -50,19 +50,24 @@
 
         private static void GetChoice(ref eMenuOption io_UserChoice)
         {
-            bool legalInput = int.TryParse(Console.ReadLine(), out int userChoice);
-            if (!legalInput)
+            bool legalInput;
+            int userChoice;
+            legalInput = int.TryParse(Console.ReadLine(), out userChoice);
+            if (legalInput && userChoice > 0 && userChoice <= 8)
             {
-                throw new FormatException();
+                io_UserChoice = (eMenuOption)userChoice;
             }
 
-            if (userChoice <= 0 || userChoice > 8)
+            while (!legalInput)
             {
-                throw new Ex03.GarageLogic.ValueOutOfRangeException(1, 8);
+                Console.WriteLine("Invalid input, please enter input between 1 and 8");
+                legalInput = int.TryParse(Console.ReadLine(), out userChoice);
+                if (legalInput && userChoice > 0 && userChoice <= 8)
+                {
+                    io_UserChoice = (eMenuOption)userChoice;
+                    continue;
+                }
             }
-
-            io_UserChoice = (eMenuOption)userChoice;
-
         }
 
         private static void ExecuteUserChoice(eMenuOption i_UserChoice)
