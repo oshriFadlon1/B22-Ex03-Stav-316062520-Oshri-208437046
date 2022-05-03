@@ -7,10 +7,10 @@
         private FuelEngine m_Engine;
 
         public RegularCar(string i_ModelName, string i_LicensePlateNumber, float i_PrecentEnergy, Customer i_Owner,
-            string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, float )
-            : base(i_ModelName, i_LicensePlateNumber,)
+            string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, float i_CurrentFuel)
+            : base(i_ModelName, i_LicensePlateNumber, i_CurrentFuel, k_MaxFuelTankVolume, i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_CarColor, i_NumberOfDoors)
         {
-            m_Engine = new FuelEngine();
+            m_Engine = new FuelEngine(i_CurrentFuel, k_MaxFuelTankVolume, k_CarFuel);
         }
     }
 }
