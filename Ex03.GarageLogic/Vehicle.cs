@@ -12,11 +12,11 @@
        private List<Wheel> m_CollectionOfWheels;
        private Customer m_Owner;
 
-       public Vehicle(string i_ModelName, string i_LicensePlateNumber, float i_PrecentEnergy, Customer i_Owner,int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
+       public Vehicle(string i_ModelName, string i_LicensePlateNumber, float i_EnergyLeft, float i_MaxEnergy, Customer i_Owner,int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
        {
            ModelName = i_ModelName;
            LicensePlateNumber = i_LicensePlateNumber;
-           PrecentEnergy = i_PrecentEnergy;
+           PrecentEnergy = CalcPrecntageEnergy(i_EnergyLeft, i_MaxEnergy);
            Owner = i_Owner;
            m_CollectionOfWheels = new List<Wheel>(i_NumOfWheels);
            for (int i = 0; i < i_NumOfWheels; i++)
@@ -93,7 +93,14 @@
             }
        }
 
-        public abstract void LoadEnergy();
-        
+      
+         public abstract void LoadEnergy();
+
+        private static float CalcPrecntageEnergy(float i_EnergyLeft, float i_MaxEnergy)
+        {
+            return (i_EnergyLeft / i_MaxEnergy) * 100;
+        }
+
+  
     }
 }
