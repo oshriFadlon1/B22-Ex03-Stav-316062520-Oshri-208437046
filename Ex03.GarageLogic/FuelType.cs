@@ -9,5 +9,9 @@
             Octan96,
             Soler,
         }
-    }
+
+        public static bool TryParse(string i_UserInput, out eFuelType o_DesiredResult)
+        {
+
+        }
 }

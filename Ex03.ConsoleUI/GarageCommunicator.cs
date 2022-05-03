@@ -70,7 +70,7 @@
             }
         }
 
-        private static void ExecuteUserChoice(eMenuOption i_UserChoice)
+        private void ExecuteUserChoice(eMenuOption i_UserChoice)
         {
             if (i_UserChoice == eMenuOption.LicenseNumbersList)
             {
@@ -85,10 +85,15 @@
                         CheckIfVehicleExist(lisencePlateNumber);
                         break;
                     case eMenuOption.ChangeVehicleState:
+                        UserChangeVehicleState(lisencePlateNumber);
                         break;
                     case eMenuOption.InflationWheelAirToMax:
+                        m_GarageManager.InflateWheels(lisencePlateNumber);
                         break;
                     case eMenuOption.FuelVehicle:
+                        //garage manager checks if is fuel vehicle
+
+                        FuelVehicle(lisencePlateNumber);
                         break;
                     case eMenuOption.ChargingVehicle:
                         break;
@@ -119,6 +124,77 @@
             {
                 throw new FormatException();
             }
+        }
+
+        //private void ParsingUserChoices<T>(string i_LisencePlateNumber)
+        //{
+        //    bool legalInput = false;
+        //    T newParse;
+        //    do
+        //    {
+        //        try
+        //        {
+        //            legalInput = T.TryParse(Console.ReadLine(), out newState);
+        //        }
+        //        catch (FormatException ex)
+        //        {
+        //            Console.WriteLine(ex.Message);
+        //        }
+        //        catch (ValueOutOfRangeException ex)
+        //        {
+        //            Console.WriteLine(ex.Message);
+        //        }
+
+        //    } while (!legalInput);
+        //}
+
+        private void UserChangeVehicleState(string i_LisencePlateNumber)
+        {
+            bool legalInput = false;
+            VehicleState.eVehicleState newState = VehicleState.eVehicleState.InRepair;
+            do
+            {
+                try
+                {
+                    legalInput = VehicleState.TryParse(Console.ReadLine(), out newState);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (ValueOutOfRangeException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            } while (!legalInput);
+
+            m_GarageManager.ChangeVehicleState(i_LisencePlateNumber, newState);
+        }
+
+        private void FuelVehicle(string i_LisencePlateNumber)
+        {
+            bool legalInput = false;
+            while(!legalInput)
+            {
+                try
+                {
+                    legalInput = float.TryParse(Console.ReadLine(), out float amountOfFuel);
+                    legalInput = FuelType.eFuelType.TryParse(Console.ReadLine(), out FuelType.eFuelType userFuelType);
+                    m_GarageManager.LoadEnergySource(i_LisencePlateNumber);
+                }
+                catch(FormatException formatException)
+                {
+                    Console.WriteLine(formatException.Message);
+                }
+                catch (ValueOutOfRangeException rangeException)
+                {
+                    Console.WriteLine(rangeException.Message);
+                }
+
+                
+            }
+
         }
     }
 }
