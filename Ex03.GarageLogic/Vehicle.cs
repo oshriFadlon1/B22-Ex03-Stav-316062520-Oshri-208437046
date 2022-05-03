@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     // to do get wheel and get all the wheels
-    public class  Vehicle
+    public abstract class Vehicle
     {
        private string m_ModelName;
        private string m_LicensePlateNumber;
@@ -65,7 +65,7 @@
        }
 
        public Customer Owner
-        {
+       {
             get
             {
                 return m_Owner;
@@ -75,13 +75,32 @@
             {
                 m_Owner = value;
             }
-        }
+       }
+
+       public int CollectionOfWheelsAmount
+       {
+            get
+            {
+                return m_CollectionOfWheels.Count;
+            }
+       }
+
+       public void InflateAllWheelsToMax()
+       {
+            foreach (Wheel wheel in m_CollectionOfWheels)
+            {
+                wheel.InflationWheelAirToMax();
+            }
+       }
+
+      
+         public abstract void LoadEnergy();
 
         private static float CalcPrecntageEnergy(float i_EnergyLeft, float i_MaxEnergy)
         {
             return (i_EnergyLeft / i_MaxEnergy) * 100;
         }
 
-
+  
     }
 }

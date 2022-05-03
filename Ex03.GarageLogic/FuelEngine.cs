@@ -1,6 +1,6 @@
 ﻿namespace Ex03.GarageLogic
 {
-    internal class FuelEngine
+    public class FuelEngine
     {
         private float m_CurrentFuel;
         private float m_MaxFuel;
@@ -67,6 +67,8 @@
                 throw new ValueOutOfRangeException(m_MaxFuel - m_CurrentFuel, 0);
             }
         }
+
+        
     }
 
 }
