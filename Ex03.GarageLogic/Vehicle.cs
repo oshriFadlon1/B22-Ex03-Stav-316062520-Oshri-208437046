@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     // to do get wheel and get all the wheels
-    public class Vehicle
+    public class  Vehicle
     {
        private string m_ModelName;
        private string m_LicensePlateNumber;
@@ -76,5 +76,7 @@
                 m_Owner = value;
             }
         }
+
+       
     }
 }
