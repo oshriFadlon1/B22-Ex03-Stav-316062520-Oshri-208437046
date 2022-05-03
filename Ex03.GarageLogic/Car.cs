@@ -24,7 +24,7 @@
         private eNumberOfDoors m_NumberOfDoors;
 
         public Car(string i_ModelName, string i_LicensePlateNumber, float i_PrecentEnergy, Customer i_Owner,
-            int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors)
+             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors)
             : base(i_ModelName, i_LicensePlateNumber, i_PrecentEnergy, i_Owner, k_CarNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_CarMaxAirPressure)
         {
             CarColor = i_CarColor;
