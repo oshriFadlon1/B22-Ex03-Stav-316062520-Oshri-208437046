@@ -7,9 +7,9 @@
         private bool m_IsDrivesRefrigeratedContents;
         private float m_CargoVolume;
 
-        public Truck(string i_ModelName, string i_LicensePlateNumber, float i_PrecentEnergy, Customer i_Owner,
-            int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, bool i_IsDrivesRefrigeratedContents, float i_CargoVolume)
-            : base(i_ModelName, i_LicensePlateNumber, i_PrecentEnergy, i_Owner, k_TruckNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_TruckMaxAirPressure)
+        public Truck(string i_ModelName, string i_LicensePlateNumber, float i_EnergyLeft, float i_MaxEnergy, Customer i_Owner,
+             string i_ManufacturerName, float i_CurrentAirPressure, bool i_IsDrivesRefrigeratedContents, float i_CargoVolume)
+            : base(i_ModelName, i_LicensePlateNumber, i_EnergyLeft, i_MaxEnergy, i_Owner, k_TruckNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_TruckMaxAirPressure)
         {
             IsDrivesRefrigeratedContents = i_IsDrivesRefrigeratedContents;
             CargoVolume = i_CargoVolume;
