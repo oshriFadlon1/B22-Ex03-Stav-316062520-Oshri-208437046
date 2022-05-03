@@ -7,8 +7,8 @@
 
         public ElectricEngine(float i_BatteryTimeLeft, float i_MaxBatteryTime)
         {
-            m_BatteryTimeLeft = i_BatteryTimeLeft;
-            m_MaxBatteryTime = i_MaxBatteryTime;
+            BatteryTimeLeft = i_BatteryTimeLeft;
+            MaxBatteryTime = i_MaxBatteryTime;
         }
 
         float BatteryTimeLeft
