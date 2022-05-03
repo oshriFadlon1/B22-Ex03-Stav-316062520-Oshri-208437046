@@ -1,20 +1,12 @@
 ﻿namespace Ex03.GarageLogic
 {
-    enum eFuelType
-    {
-        Octan98,
-        Octan95,
-        Octan96,
-        Soler
-    }
-
     internal class FuelEngine
     {
         private float m_CurrentFuel;
         private float m_MaxFuel;
-        private eFuelType m_Fuel;
+        private FuelType.eFuelType m_Fuel;
 
-        public FuelEngine(float i_CurrentFuel, float i_MaxFuel, eFuelType i_Fuel)
+        public FuelEngine(float i_CurrentFuel, float i_MaxFuel, FuelType.eFuelType i_Fuel)
         {
             m_CurrentFuel = i_CurrentFuel;
             m_MaxFuel = i_MaxFuel;
@@ -47,7 +39,7 @@
             }
         }
 
-        public eFuelType Fuel
+        public FuelType.eFuelType Fuel
         {
             get
             {
@@ -60,7 +52,7 @@
             }
         }
 
-        public void Refuel(float i_AmountOfFuel, eFuelType i_FuelToFill)
+        public void Refuel(float i_AmountOfFuel, FuelType.eFuelType i_FuelToFill)
         {
             if (this.m_Fuel != i_FuelToFill || i_AmountOfFuel < 0)
             {
