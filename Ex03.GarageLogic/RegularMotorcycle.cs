@@ -2,8 +2,8 @@
 {
     public class RegularMotorcycle : Motorcycle
     {
-        private const FuelType.eFuelType CarFuel = FuelType.eFuelType.Octan98;
-        private const float MaxFuelTankVolume = 6.2F;
+        private const FuelType.eFuelType k_MotorcycleFuel = FuelType.eFuelType.Octan98;
+        private const float k_MaxFuelTankVolume = 6.2F;
         private FuelEngine m_FuelEngine = new FuelEngine();
     }
 }
