@@ -7,7 +7,7 @@
     {
         GarageManager m_GarageManager = new GarageManager();
 
-        public static void RunMenu()
+        public void RunMenu()
         {
             eMenuOption userChoice = eMenuOption.Start;
             Console.WriteLine("Hello! Welcome to the GARAGE!");
@@ -78,42 +78,67 @@
             }
             else
             {
-                AskUserLisencePlateNumber(out string lisencePlateNumber);
-                switch (i_UserChoice)
-                {
-                    case eMenuOption.NewVehicle:
-                        CheckIfVehicleExist(lisencePlateNumber);
-                        break;
-                    case eMenuOption.ChangeVehicleState:
-                        UserChangeVehicleState(lisencePlateNumber);
-                        break;
-                    case eMenuOption.InflationWheelAirToMax:
-                        m_GarageManager.InflateWheels(lisencePlateNumber);
-                        break;
-                    case eMenuOption.FuelVehicle:
-                        //garage manager checks if is fuel vehicle
 
-                        FuelVehicle(lisencePlateNumber);
-                        break;
-                    case eMenuOption.ChargingVehicle:
-                        break;
-                    case eMenuOption.FullDetailsOnVehicle:
-                        break;
+                AskUserLisencePlateNumber(out string lisencePlateNumber);
+                bool isVehicleExist = CheckIfVehicleExist(lisencePlateNumber);
+                if (i_UserChoice == eMenuOption.NewVehicle && !isVehicleExist)
+                {
+                    AddVehicle(lisencePlateNumber);
+
+                }
+                if (isVehicleExist)
+                {
+                    switch (i_UserChoice)
+                    {
+                        case eMenuOption.NewVehicle:
+                            Console.WriteLine("This vehicle has already in the garage!");
+                            m_GarageManager.ChangeVehicleState(lisencePlateNumber, VehicleState.eVehicleState.InRepair);
+                            break;
+                        case eMenuOption.ChangeVehicleState:
+                            UserChangeVehicleState(lisencePlateNumber);
+                            break;
+                        case eMenuOption.InflationWheelAirToMax:
+                            m_GarageManager.InflateWheels(lisencePlateNumber);
+                            break;
+                        case eMenuOption.FuelVehicle:
+                            if (isVehicleExist)
+                            {
+                                FuelVehicle(lisencePlateNumber);
+                            }
+
+                            break;
+                        case eMenuOption.ChargingVehicle:
+                            if (isVehicleExist)
+                            {
+                                ChargeVehicle(lisencePlateNumber);
+                            }
+
+                            break;
+                        case eMenuOption.FullDetailsOnVehicle:
+                            if (isVehicleExist)
+                            {
+                                // tostring in override to vehicle and currentVehicle
+                            }
+                            break;
+                    }
                 }
             }
         }
 
-        private void CheckIfVehicleExist(string i_LisencePlateNumber)
+        private void AddVehicle(string i_LisencePlateNumber)
         {
-            if (IsLisencePlateNumberExist(i_LisencePlateNumber)) // LogicMethod
-            {
-                Console.WriteLine("This vehicle has already in the garage!");
-                //change the vehicle state - logic method
-            }
-            else
-            {
                 //AddNewVehicle(i_LisencePlateNumber); - LogicMethod
+        }
+
+        private bool CheckIfVehicleExist(string i_LisencePlateNumber)
+        {
+            bool isVehicleExist = false;
+            if (m_GarageManager.IsLisencePlateNumberExist(i_LisencePlateNumber))
+            {
+                isVehicleExist = true;
             }
+
+            return isVehicleExist;
         }
 
         private void AskUserLisencePlateNumber(out string o_LisencePlateNumber)
@@ -125,28 +150,6 @@
                 throw new FormatException();
             }
         }
-
-        //private void ParsingUserChoices<T>(string i_LisencePlateNumber)
-        //{
-        //    bool legalInput = false;
-        //    T newParse;
-        //    do
-        //    {
-        //        try
-        //        {
-        //            legalInput = T.TryParse(Console.ReadLine(), out newState);
-        //        }
-        //        catch (FormatException ex)
-        //        {
-        //            Console.WriteLine(ex.Message);
-        //        }
-        //        catch (ValueOutOfRangeException ex)
-        //        {
-        //            Console.WriteLine(ex.Message);
-        //        }
-
-        //    } while (!legalInput);
-        //}
 
         private void UserChangeVehicleState(string i_LisencePlateNumber)
         {
@@ -166,35 +169,86 @@
                 {
                     Console.WriteLine(ex.Message);
                 }
-
-            } while (!legalInput);
+            }
+            while (!legalInput);
 
             m_GarageManager.ChangeVehicleState(i_LisencePlateNumber, newState);
         }
 
         private void FuelVehicle(string i_LisencePlateNumber)
         {
+            float amountOfFuel;
             bool legalInput = false;
-            while(!legalInput)
+            while (!legalInput)
             {
                 try
                 {
-                    legalInput = float.TryParse(Console.ReadLine(), out float amountOfFuel);
-                    legalInput = FuelType.eFuelType.TryParse(Console.ReadLine(), out FuelType.eFuelType userFuelType);
-                    m_GarageManager.LoadEnergySource(i_LisencePlateNumber);
+                    Console.WriteLine("Enter how much fuel you would like to refuel.");
+                    amountOfFuel = float.Parse(Console.ReadLine());
+
+                    PrintAllTypeOfFuel();
+                    legalInput = EnergySourceType.eEnergySourceType.TryParse(Console.ReadLine(), out EnergySourceType.eEnergySourceType userFuelType);
+
+                    m_GarageManager.LoadEnergySource(i_LisencePlateNumber, amountOfFuel, legalInput, userFuelType);
                 }
-                catch(FormatException formatException)
+                catch (FormatException formatException)
                 {
                     Console.WriteLine(formatException.Message);
+                }
+                catch (ArgumentException argumentException)
+                {
+                    Console.WriteLine(argumentException.Message);
                 }
                 catch (ValueOutOfRangeException rangeException)
                 {
                     Console.WriteLine(rangeException.Message);
                 }
-
-                
             }
+        }
 
+        private void ChargeVehicle(string i_LisencePlateNumber)
+        {
+            float amountOfEnergy;
+            bool legalInput = false;
+            while (!legalInput)
+            {
+                try
+                {
+                    Console.WriteLine("Enter how much to Charge you would like to refuel.");
+                    amountOfEnergy = float.Parse(Console.ReadLine());
+                    legalInput = true;
+                    m_GarageManager.LoadEnergySource(i_LisencePlateNumber, amountOfEnergy, legalInput, EnergySourceType.eEnergySourceType.Electric);
+                }
+                catch (FormatException formatException)
+                {
+                    Console.WriteLine(formatException.Message);
+                }
+                catch (ValueOutOfRangeException rangeException)
+                {
+                    legalInput = false;
+                    Console.WriteLine(rangeException.Message);
+                }
+            }
+        }
+
+        public static void PrintAllTypeOfFuel()
+        {
+            string fuelName;
+            for (int i = 1; i < Enum.GetNames(typeof(EnergySourceType.eEnergySourceType)).Length; i++)
+            {
+                fuelName = ((EnergySourceType.eEnergySourceType)i).ToString();
+                Console.WriteLine("To select {0} press {1}.", fuelName, i);
+            }
+        }
+
+        public static void PrintAllTypeOfVehicles()
+        {
+            string vehicleType;
+            for (int i = 0; i < Enum.GetNames(typeof(VehicleType.eTypeVehicles)).Length; i++)
+            {
+                vehicleType = ((VehicleType.eTypeVehicles)i).ToString();
+                Console.WriteLine("To select {0} press {1}.", vehicleType, i + 1);
+            }
         }
     }
 }

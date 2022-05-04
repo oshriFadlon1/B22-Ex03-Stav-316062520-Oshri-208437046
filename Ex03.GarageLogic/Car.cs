@@ -16,7 +16,7 @@
         Five = 5
     }
 
-    public class Car : Vehicle
+    public abstract class Car : Vehicle
     {
         private const float k_CarMaxAirPressure = 29;
         private const int k_CarNumOfWheels = 4;
@@ -24,8 +24,8 @@
         private eNumberOfDoors m_NumberOfDoors;
 
         public Car(string i_ModelName, string i_LicensePlateNumber, float i_EnergyLeft, float i_MaxEnergy, Customer i_Owner,
-             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors)
-            : base(i_ModelName, i_LicensePlateNumber, i_EnergyLeft, i_MaxEnergy, i_Owner, k_CarNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_CarMaxAirPressure)
+             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, bool i_IsElectricVehicle)
+            : base(i_ModelName, i_LicensePlateNumber, i_EnergyLeft, i_MaxEnergy, i_Owner, k_CarNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_CarMaxAirPressure, i_IsElectricVehicle)
         {
             CarColor = i_CarColor;
             NumberOfDoors = i_NumberOfDoors;
