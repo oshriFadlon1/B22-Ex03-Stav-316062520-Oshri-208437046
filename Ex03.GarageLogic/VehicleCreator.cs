@@ -1,7 +1,21 @@
 ﻿namespace Ex03.GarageLogic
 {
-    internal class VehicleCreator
+    public class VehicleCreator
     {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //public static bool ConvertVehicleToRegularCar(Vehicle i_vehicle, ref RegularCar o_Car)
         //{
         //    bool isConvert = false;
