@@ -14,7 +14,7 @@ namespace Ex03.GarageLogic
         BB
     }
 
-    public class Motorcycle : Vehicle
+    public abstract class Motorcycle : Vehicle
     {
         private const float k_MotorcycleMaxAirPressure = 31;
         private const int k_MotorcycleNumOfWheels = 2;
@@ -22,22 +22,23 @@ namespace Ex03.GarageLogic
         private int m_EngineVolume;
 
         public Motorcycle(string i_ModelName, string i_LicensePlateNumber, float i_EnergyLeft, float i_MaxEnergy, Customer i_Owner,
-             string i_ManufacturerName, float i_CurrentAirPressure, eMotorcycleLicense i_LicenseType, int i_EngineVolume)
-            : base(i_ModelName, i_LicensePlateNumber, i_EnergyLeft, i_MaxEnergy, i_Owner, k_MotorcycleNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_MotorcycleMaxAirPressure)
+             string i_ManufacturerName, float i_CurrentAirPressure, eMotorcycleLicense i_LicenseType, int i_EngineVolume, bool i_IsElectricVehicle)
+            : base(i_ModelName, i_LicensePlateNumber, i_EnergyLeft, i_MaxEnergy, i_Owner, k_MotorcycleNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_MotorcycleMaxAirPressure, i_IsElectricVehicle)
         {
             LicenseType = i_LicenseType;
             EngineVolume = i_EngineVolume;
         }
 
         public int EngineVolume
-        { 
-           get 
-           { 
+        {
+           get
+           {
                 return m_EngineVolume;
            }
-           set 
+
+           set
            {
-                m_EngineVolume = value; 
+                m_EngineVolume = value;
            }
         }
 
@@ -47,8 +48,9 @@ namespace Ex03.GarageLogic
             {
                 return m_LicenseType;
             }
+
             set
-            { 
+            {
                 m_LicenseType = value;
             }
         }

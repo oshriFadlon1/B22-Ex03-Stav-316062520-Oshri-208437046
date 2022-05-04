@@ -1,10 +1,17 @@
 ﻿namespace Ex03.GarageLogic
 {
+    using System;
     using System.Collections.Generic;
 
     public class GarageManager
     {
-        private Dictionary<string,Vehicle> m_VehiclesList;
+
+        private Dictionary<string, Vehicle> m_VehiclesList;
+
+        public GarageManager()
+        {
+            m_VehiclesList = new Dictionary<string, Vehicle>();
+        }
 
         public Dictionary<string, Vehicle> VehiclesList
         {
@@ -34,9 +41,31 @@
             m_VehiclesList[i_LisencePlateNumber].InflateAllWheelsToMax();
         }
 
-        public void LoadEnergySource(string i_LisencePlateNumber)
+        public void LoadEnergySource(string i_LisencePlateNumber, float i_AmountOfEnergy, bool i_LegalInput, EnergySourceType.eEnergySourceType i_EnergySource)
         {
-            m_VehiclesList[i_LisencePlateNumber]
+            if (i_LegalInput)
+            {
+                m_VehiclesList[i_LisencePlateNumber].LoadEnergy(i_AmountOfEnergy, i_EnergySource);
+            }
+            else
+            {
+                throw new FormatException("Incorrect choice.");
+            }
         }
+
+        public bool IsLisencePlateNumberExist(string i_LisencePlateNumber)
+        {
+           return m_VehiclesList.ContainsKey(i_LisencePlateNumber);
+        }
+
+        //public bool IsHaveElectricEngine(string i_LisencePlateNumber)
+        //{
+        //   return m_VehiclesList[i_LisencePlateNumber].IsElectricVehicle;
+        //}
+
+        //private void FindFuelType()
+        //{
+           
+        //}
     }
 }
