@@ -85,7 +85,9 @@
 
                 if (i_UserChoice == eMenuOption.NewVehicle && !isVehicleExist)
                 {
-                    AddVehicle(lisencePlateNumber);
+                    VehicleType.eTypeVehicles userVehicle = UserChooseHisVehicleType();
+                    
+                    AddVehicle(lisencePlateNumber, userVehicle);
                 }
 
                 if (isVehicleExist)
@@ -121,9 +123,57 @@
             }
         }
 
-        private void AddVehicle(string i_LisencePlateNumber)
+        private static VehicleType.eTypeVehicles UserChooseHisVehicleType()
         {
-                //AddNewVehicle(i_LisencePlateNumber); - LogicMethod
+            bool legalInput = false;
+            VehicleType.eTypeVehicles userVehicle = VehicleType.eTypeVehicles.FuelCar;
+
+            do
+            {
+                try
+                {
+                    PrintAllTypeOfVehicles();
+                    userVehicle = (VehicleType.eTypeVehicles)Enum.Parse(typeof(VehicleType.eTypeVehicles),Console.ReadLine());
+                    legalInput = true;
+                }
+                catch(ArgumentException argumentException)
+                {
+                    Console.WriteLine(argumentException.Message);
+                }
+                catch (Exception exception)
+                { 
+                    Console.WriteLine(exception.Message);
+                }
+            } while (!legalInput) ;
+
+            return userVehicle;
+
+                
+        }
+
+        private void AddVehicle(string i_lisencePlateNumber, VehicleType.eTypeVehicles i_UserVehicle)
+        {
+            Console.WriteLine("Please enter vehicle model name: ");
+            string modelName = Console.ReadLine();
+            while(modelName.Length == 0)
+            {
+                Console.WriteLine("Wrong insert. Please try again: ");
+                modelName = Console.ReadLine();
+            }
+
+            float amountOfEnergy = UserInsertAmountOfEnergy();
+            UserInsertDetailsOfWheels(out string manufactureName, out float currentAirPressure, out float maxAirPressure);
+
+
+            
+
+
+
+           
+
+
+            
+            //AddNewVehicle(i_LisencePlateNumber); - LogicMethod
         }
 
         private bool CheckIfVehicleExist(string i_LisencePlateNumber)
@@ -149,7 +199,32 @@
             }
         }
 
-        private VehicleState.eVehicleState UserChooseVehicleState()
+        private static float UserInsertAmountOfEnergy()
+        {
+            Console.WriteLine("Please enter the current amount of energy in the vehicle: ");
+            bool legalAmoutOfEnergy = false;
+            float amountOfEnergy = 0;
+            while (!legalAmoutOfEnergy)
+            {
+                try
+                {
+                    amountOfEnergy = float.Parse(Console.ReadLine());
+                    //check positive amount - logic method
+                    legalAmoutOfEnergy = true;
+                }
+                catch (FormatException formatException)
+                {
+                    Console.WriteLine(formatException.Message);
+                }
+                catch (ValueOutOfRangeException valueOutOfRangeException)
+                {
+                    Console.WriteLine(valueOutOfRangeException.Message);
+                }
+            }
+            return amountOfEnergy;
+        }
+
+        private static VehicleState.eVehicleState UserChooseVehicleState()
         {
             bool legalInput = false;
             VehicleState.eVehicleState newState = VehicleState.eVehicleState.InRepair;
