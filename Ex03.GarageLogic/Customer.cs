@@ -44,5 +44,13 @@
                 m_CurrentVehicleState = value;
             }
         }
+
+        public override string ToString()
+        {
+            return string.Format(@"Nmae Owne: {0}.
+Phone number: {1}.
+Vehicle state is :{2}.
+",m_Name,m_PhoneNumber,m_CurrentVehicleState);
+        }
     }
 }

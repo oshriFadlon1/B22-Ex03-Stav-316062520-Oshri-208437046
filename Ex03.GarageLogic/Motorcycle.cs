@@ -54,5 +54,12 @@ namespace Ex03.GarageLogic
                 m_LicenseType = value;
             }
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + string.Format(@"License type is: {0}.
+The volume of the engine is: {1}.
+",m_LicenseType,m_EngineVolume);
+        }
     }
 }

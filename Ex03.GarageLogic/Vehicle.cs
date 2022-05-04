@@ -24,8 +24,6 @@
             {
                 m_CollectionOfWheels.Add(new Wheel(i_ManufacturerName, i_CurrentAirPressure, i_MaxAirPressure));
             }
-
-            m_IsElectricVehicle = i_IsElectricVehicle;
         }
 
         public string ModelName
@@ -98,11 +96,42 @@
 
         public abstract void LoadEnergy(float i_AmountOfEnergy, EnergySourceType.eEnergySourceType i_EnergySource);
 
+        public static void Reload(float i_AmountOfEnergy, ref float io_CurrentAmountOfEnergy, float i_MaxEnergy)
+        {
+            if (i_AmountOfEnergy >= 0)
+            {
+                if (i_MaxEnergy >= io_CurrentAmountOfEnergy + i_AmountOfEnergy) 
+                {
+                    io_CurrentAmountOfEnergy += i_AmountOfEnergy;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(i_MaxEnergy - io_CurrentAmountOfEnergy, 0);
+                }
+            }
+            else
+            {
+                throw new ArgumentException("invalid input.The amount of energy can`t be negative.");
+            }
+        }
+
         private static float CalcPrecntageEnergy(float i_EnergyLeft, float i_MaxEnergy)
         {
             return (i_EnergyLeft / i_MaxEnergy) * 100;
         }
 
+        public override string ToString()
+        {
+            string currentDataOfVehicle = this.m_Owner.ToString() + string.Format(@"Model name is: {0}.
+License plate number is: {1}.
+The precent energy is:{2}.
+",m_ModelName,m_LicensePlateNumber,m_PrecentEnergy);
+            foreach (Wheel wheel in m_CollectionOfWheels)
+            {
+                currentDataOfVehicle += wheel.ToString();
+            }
 
+            return currentDataOfVehicle;
+        }
     }
 }

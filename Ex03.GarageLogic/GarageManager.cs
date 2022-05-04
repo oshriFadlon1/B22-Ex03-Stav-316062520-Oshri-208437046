@@ -58,14 +58,29 @@
            return m_VehiclesList.ContainsKey(i_LisencePlateNumber);
         }
 
-        //public bool IsHaveElectricEngine(string i_LisencePlateNumber)
-        //{
-        //   return m_VehiclesList[i_LisencePlateNumber].IsElectricVehicle;
-        //}
+        public string GetDataOfCurrentVehicle(string i_LisencePlateNumber)
+        {
+            return m_VehiclesList[i_LisencePlateNumber].ToString();
+        }
 
-        //private void FindFuelType()
-        //{
-           
-        //}
+        public void GetAllLicenseNumbers(ref List<string> io_LicenseNumbers)
+        {
+            foreach (KeyValuePair<string, Vehicle> license in m_VehiclesList)
+            {
+                io_LicenseNumbers.Add(license.Key);
+            }
+        }
+
+        public void GetAllLicenseNumbersByState(ref List<string> io_LicenseNumbers, VehicleState.eVehicleState i_State)
+        {
+            foreach (KeyValuePair<string, Vehicle> license in m_VehiclesList)
+            {
+                if (license.Value.Owner.CurrentVehicleState == i_State)
+                {
+                    io_LicenseNumbers.Add(license.Key);
+                }
+
+            }
+        }
     }
 }

@@ -19,19 +19,12 @@
         public void ChargeTheBattery(float i_AmountOfTimeToCharge)
         {
             float hoursTocharge = i_AmountOfTimeToCharge / 60f;
-            if (k_MaxBatteryTime >= m_BatteryTimeLeft + hoursTocharge)
-            {
-                m_BatteryTimeLeft += hoursTocharge;
-            }
-            else
-            {
-                throw new ValueOutOfRangeException(k_MaxBatteryTime - m_BatteryTimeLeft, 0);
-            }
+            Reload(hoursTocharge, ref m_BatteryTimeLeft, k_MaxBatteryTime);
         }
 
         public override void LoadEnergy(float i_AmountOfEnergy, EnergySourceType.eEnergySourceType i_EnergySource)
         {
-            if (k_CarSource == i_EnergySource)
+            if (k_MotorcycleSource == i_EnergySource)
             {
                 ChargeTheBattery(i_AmountOfEnergy);
             }
@@ -39,7 +32,14 @@
             {
                 throw new ArgumentException("incorrect energy source.");
             }
+        }
 
+        public override string ToString()
+        {
+           return base.ToString() + string.Format(@"the motorcycle runs on: {0}.
+Battery run time left is: {1}.
+Max battery runing time is: {2}.
+", k_MotorcycleSource, m_BatteryTimeLeft, k_MaxBatteryTime);
         }
     }
 }
