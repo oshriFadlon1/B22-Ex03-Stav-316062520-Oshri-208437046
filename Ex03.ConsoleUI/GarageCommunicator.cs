@@ -1,6 +1,7 @@
 ﻿namespace Ex03.ConsoleUI
 {
     using System;
+    using System.Collections.Generic;
     using Ex03.GarageLogic;
 
     public class GarageCommunicator
@@ -19,17 +20,17 @@
                     GetChoice(ref userChoice);
                     ExecuteUserChoice(userChoice);
                 }
-                catch (FormatException ex)
+                catch (FormatException formatException)
                 {
-                    // invalid input
+                    Console.WriteLine(formatException.Message);
                 }
-                catch (ArgumentException ex)
+                catch (ArgumentException argumentException)
                 {
-                    // invalid input in logic means
+                    Console.WriteLine(argumentException.Message);
                 }
-                catch (Ex03.GarageLogic.ValueOutOfRangeException ex)
+                catch (Ex03.GarageLogic.ValueOutOfRangeException valueOutOfRangeException)
                 {
-                    // value out of range
+                    Console.WriteLine(valueOutOfRangeException.Message);
                 }
 
             } while (userChoice != eMenuOption.Exit);
@@ -74,18 +75,19 @@
         {
             if (i_UserChoice == eMenuOption.LicenseNumbersList)
             {
-                //PrintList
+                PrintAllLicenseNumbers();
             }
             else
             {
 
                 AskUserLisencePlateNumber(out string lisencePlateNumber);
                 bool isVehicleExist = CheckIfVehicleExist(lisencePlateNumber);
+
                 if (i_UserChoice == eMenuOption.NewVehicle && !isVehicleExist)
                 {
                     AddVehicle(lisencePlateNumber);
-
                 }
+
                 if (isVehicleExist)
                 {
                     switch (i_UserChoice)
@@ -95,32 +97,26 @@
                             m_GarageManager.ChangeVehicleState(lisencePlateNumber, VehicleState.eVehicleState.InRepair);
                             break;
                         case eMenuOption.ChangeVehicleState:
-                            UserChangeVehicleState(lisencePlateNumber);
+                            VehicleState.eVehicleState newState = UserChooseVehicleState();
+                            m_GarageManager.ChangeVehicleState(lisencePlateNumber, newState);
                             break;
                         case eMenuOption.InflationWheelAirToMax:
                             m_GarageManager.InflateWheels(lisencePlateNumber);
                             break;
                         case eMenuOption.FuelVehicle:
-                            if (isVehicleExist)
-                            {
-                                FuelVehicle(lisencePlateNumber);
-                            }
-
+                            FuelVehicle(lisencePlateNumber);
                             break;
                         case eMenuOption.ChargingVehicle:
-                            if (isVehicleExist)
-                            {
-                                ChargeVehicle(lisencePlateNumber);
-                            }
-
+                            ChargeVehicle(lisencePlateNumber);
                             break;
                         case eMenuOption.FullDetailsOnVehicle:
-                            if (isVehicleExist)
-                            {
-                                // tostring in override to vehicle and currentVehicle
-                            }
+                            PrintAllDataOfCurrentVehicle(lisencePlateNumber);
                             break;
                     }
+                }
+                else
+                {
+                    Console.WriteLine("You inserted a license plate that does not exist in the system.");
                 }
             }
         }
@@ -145,13 +141,15 @@
         {
             Console.WriteLine("Please enter your lisence plate number: ");
             o_LisencePlateNumber = Console.ReadLine();
-            if (o_LisencePlateNumber.Length == 0)
+            while (o_LisencePlateNumber.Length == 0)
             {
-                throw new FormatException();
+                Console.WriteLine("lisence plate number most contain at least 1 character.");
+                Console.WriteLine("Please enter your lisence plate number: ");
+                o_LisencePlateNumber = Console.ReadLine();
             }
         }
 
-        private void UserChangeVehicleState(string i_LisencePlateNumber)
+        private VehicleState.eVehicleState UserChooseVehicleState()
         {
             bool legalInput = false;
             VehicleState.eVehicleState newState = VehicleState.eVehicleState.InRepair;
@@ -159,20 +157,21 @@
             {
                 try
                 {
+                    PrintAllTypeOfState();
                     legalInput = VehicleState.TryParse(Console.ReadLine(), out newState);
                 }
-                catch (FormatException ex)
+                catch (FormatException formatException)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(formatException.Message);
                 }
-                catch (ValueOutOfRangeException ex)
+                catch (ValueOutOfRangeException valueOutOfRangeException)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(valueOutOfRangeException.Message);
                 }
             }
             while (!legalInput);
 
-            m_GarageManager.ChangeVehicleState(i_LisencePlateNumber, newState);
+            return newState;
         }
 
         private void FuelVehicle(string i_LisencePlateNumber)
@@ -214,7 +213,7 @@
             {
                 try
                 {
-                    Console.WriteLine("Enter how much to Charge you would like to refuel.");
+                    Console.WriteLine("Enter how much minutes to Charge you would like to recharge.");
                     amountOfEnergy = float.Parse(Console.ReadLine());
                     legalInput = true;
                     m_GarageManager.LoadEnergySource(i_LisencePlateNumber, amountOfEnergy, legalInput, EnergySourceType.eEnergySourceType.Electric);
@@ -231,10 +230,20 @@
             }
         }
 
+        public static void PrintAllTypeOfState()
+        {
+            string stateName;
+            for (int i = 0; i < Enum.GetNames(typeof(VehicleState.eVehicleState)).Length; i++)
+            {
+                stateName = ((VehicleState.eVehicleState)i).ToString();
+                Console.WriteLine("To select {0} press {1}.", stateName, i);
+            }
+        }
+
         public static void PrintAllTypeOfFuel()
         {
             string fuelName;
-            for (int i = 1; i < Enum.GetNames(typeof(EnergySourceType.eEnergySourceType)).Length; i++)
+            for (int i = 1; i <= Enum.GetNames(typeof(EnergySourceType.eEnergySourceType)).Length; i++)
             {
                 fuelName = ((EnergySourceType.eEnergySourceType)i).ToString();
                 Console.WriteLine("To select {0} press {1}.", fuelName, i);
@@ -248,6 +257,51 @@
             {
                 vehicleType = ((VehicleType.eTypeVehicles)i).ToString();
                 Console.WriteLine("To select {0} press {1}.", vehicleType, i + 1);
+            }
+        }
+
+        public void PrintAllDataOfCurrentVehicle(string i_LisencePlateNumber)
+        {
+            Console.WriteLine(m_GarageManager.GetDataOfCurrentVehicle(i_LisencePlateNumber));
+        }
+
+        public void PrintAllLicenseNumbers()
+        {
+            char userChoice = 'n';
+            bool legalInput = false;
+            List<string> licenses = new List<string>();
+            while (!legalInput)
+            {
+                try
+                {
+                    Console.WriteLine("Would you like to filter by the repair condition of the vehicle?");
+                    Console.WriteLine("enter y for yes and n for no.");
+                    userChoice = char.Parse(Console.ReadLine());
+                    legalInput = true;
+                }
+                catch (FormatException formatException)
+                {
+                    Console.WriteLine(formatException.Message);
+                }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
+            }
+
+            if (userChoice == 'y')
+            {
+                VehicleState.eVehicleState newState = UserChooseVehicleState();
+                m_GarageManager.GetAllLicenseNumbersByState(ref licenses, newState);
+            }
+            else
+            {
+                m_GarageManager.GetAllLicenseNumbers(ref licenses);
+            }
+
+            foreach (string licenseNumber in licenses)
+            {
+                Console.WriteLine(licenseNumber);
             }
         }
     }

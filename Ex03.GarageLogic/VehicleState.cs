@@ -28,7 +28,7 @@ namespace Ex03.GarageLogic
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(0, Enum.GetNames(typeof(VehicleState.eVehicleState)).Length);
+                    throw new ValueOutOfRangeException(Enum.GetNames(typeof(VehicleState.eVehicleState)).Length, 0);
                 }
             }
             else

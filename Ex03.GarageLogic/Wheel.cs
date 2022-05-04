@@ -68,5 +68,13 @@
         {
             InflateWheel(this.m_MaxAirPressure - this.m_CurrentAirPressure);
         }
+
+        public override string ToString()
+        {
+            return string.Format(@"Manufacturer name is: {0}.
+Current air pressure is: {1}.
+Max air pressure{2}.
+", m_ManufacturerName, m_CurrentAirPressure, m_MaxAirPressure);
+        }
     }
 }

@@ -19,7 +19,7 @@
         {
             if (k_CarSource == i_EnergySource)
             {
-                Refuel(i_AmountOfFuel);
+                Reload(i_AmountOfFuel, ref m_CurrentFuel, k_MaxFuelTankVolume);
             }
             else
             {
@@ -27,19 +27,12 @@
             }
         }
 
-        public void Refuel(float i_AmountOfFuel)
+        public override string ToString()
         {
-            if (i_AmountOfFuel < 0)
-            {
-                if (k_MaxFuelTankVolume >= m_CurrentFuel + i_AmountOfFuel) // have the same fuel and the amount is positive
-                {
-                    m_CurrentFuel += i_AmountOfFuel;
-                }
-                else
-                {
-                    throw new ValueOutOfRangeException(k_MaxFuelTankVolume - m_CurrentFuel, 0);
-                }
-            }
+            return base.ToString() + string.Format(@"Car fuel is: {0}.
+Current amount of fuel is: {1}.
+Max volume of the fuel tank is: {2}.
+",k_CarSource,m_CurrentFuel,k_MaxFuelTankVolume);
         }
     }
 }

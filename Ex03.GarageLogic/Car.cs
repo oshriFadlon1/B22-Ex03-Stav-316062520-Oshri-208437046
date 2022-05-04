@@ -72,5 +72,12 @@
                 return k_CarNumOfWheels;
             }
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + string.Format(@"The color of the car is: {0}.
+Number of doors is: {1}.
+",m_CarColor,m_NumberOfDoors);
+        }
     }
 }

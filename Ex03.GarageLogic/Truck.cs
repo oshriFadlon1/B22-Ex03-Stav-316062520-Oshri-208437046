@@ -41,6 +41,11 @@
             }
         }
 
-
+        public override string ToString()
+        {
+            return base.ToString() + string.Format(@"Cargo volume is: {0}.
+If can drives refrigerated stuff: {1}.
+", m_CargoVolume,m_IsDrivesRefrigeratedContents);
+        }
     }
 }
