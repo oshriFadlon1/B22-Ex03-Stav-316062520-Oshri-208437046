@@ -133,5 +133,11 @@ The precent energy is:{2}.
 
             return currentDataOfVehicle;
         }
+
+        public static string getMyClass()
+        {
+            Assembly 
+            return Vehicle.getMyClass
+        }
     }
 }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Reflection;
     using Ex03.GarageLogic;
 
     public class GarageCommunicator
@@ -164,9 +165,32 @@
             float amountOfEnergy = UserInsertAmountOfEnergy();
             UserInsertDetailsOfWheels(out string manufactureName, out float currentAirPressure, out float maxAirPressure);
 
-
+            Type[] kindOfVehicls = Assembly.GetAssembly(typeof(Vehicle)).GetTypes();
+            List<string> typesInEnum = VehicleType.getListOfTypes();
             
+            string theUserVehicleType = typesInEnum[(int)i_UserVehicle];
 
+            Type foundType;
+            MemberInfo[] members;
+            foreach(Type kind in kindOfVehicls)
+            {
+                if (kind.IsSubclassOf(typeof(Vehicle)))
+                {
+                    if (theUserVehicleType == kind.Name)
+                    {
+                        members = kind.GetMembers();
+                        
+
+                        foreach (MemberInfo member in members)
+                        {
+                            
+                        }
+
+                        foundType = kind;
+                        break;
+                    }
+                }
+            }
 
 
            
@@ -174,6 +198,12 @@
 
             
             //AddNewVehicle(i_LisencePlateNumber); - LogicMethod
+        }
+
+        Type[] GetInheritedClasses(Type MyType)
+        {
+           
+            return Assembly.GetAssembly(MyType).GetTypes();
         }
 
         private bool CheckIfVehicleExist(string i_LisencePlateNumber)
