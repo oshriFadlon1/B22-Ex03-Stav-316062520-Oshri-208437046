@@ -10,9 +10,16 @@
 
         public ElectricCar(string i_ModelName, string i_LicensePlateNumber, Customer i_Owner,
             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, float i_BatteryTimeLeft)
-            : base(i_ModelName, i_LicensePlateNumber, i_BatteryTimeLeft, k_MaxBatteryTime, i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_CarColor, i_NumberOfDoors, true)
+            : base(i_ModelName, i_LicensePlateNumber, i_BatteryTimeLeft, k_MaxBatteryTime, i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_CarColor, i_NumberOfDoors)
         {
-            m_BatteryTimeLeft = i_BatteryTimeLeft;
+            if (k_MaxBatteryTime > i_BatteryTimeLeft)
+            {
+                m_BatteryTimeLeft = i_BatteryTimeLeft;
+            }
+            else
+            {
+                throw new ArgumentException("the amount of Battery time is over the max of the battery in the car.");
+            }
         }
 
         public void ChargeTheBattery(float i_AmountOfTimeToCharge)

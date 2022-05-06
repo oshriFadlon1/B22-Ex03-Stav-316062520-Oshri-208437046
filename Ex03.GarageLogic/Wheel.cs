@@ -1,5 +1,7 @@
 ﻿namespace Ex03.GarageLogic
 {
+    using System;
+
     internal class Wheel
     {
         string m_ManufacturerName;
@@ -9,8 +11,15 @@
         public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
             ManufacturerName = i_ManufacturerName;
-            CurrentAirPressure = i_CurrentAirPressure;
-            MaxAirPressure = i_MaxAirPressure;
+            if (i_CurrentAirPressure < i_MaxAirPressure)
+            {
+                CurrentAirPressure = i_CurrentAirPressure;
+                MaxAirPressure = i_MaxAirPressure;
+            }
+            else
+            {
+                throw new ArgumentException("the air pressure is over the max pressure recommended by the creator.");
+            }
         }
 
         string ManufacturerName

@@ -8,11 +8,18 @@
         private const float k_MaxFuelTankVolume = 38f;
         private float m_CurrentFuel;
 
-        public RegularCar(string i_ModelName, string i_LicensePlateNumber, float i_PrecentEnergy, Customer i_Owner,
+        public RegularCar(string i_ModelName, string i_LicensePlateNumber, Customer i_Owner,
             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, float i_CurrentFuel)
-            : base(i_ModelName, i_LicensePlateNumber, i_CurrentFuel, k_MaxFuelTankVolume, i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_CarColor, i_NumberOfDoors, false)
+            : base(i_ModelName, i_LicensePlateNumber, i_CurrentFuel, k_MaxFuelTankVolume, i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_CarColor, i_NumberOfDoors)
         {
-            m_CurrentFuel = i_CurrentFuel;
+            if (k_MaxFuelTankVolume > i_CurrentFuel)
+            {
+                m_CurrentFuel = i_CurrentFuel;
+            }
+            else
+            {
+                throw new ArgumentException("the amount of fuel is over the max tank volume of the car.");
+            }
         }
 
         public override void LoadEnergy(float i_AmountOfFuel, EnergySourceType.eEnergySourceType i_EnergySource)

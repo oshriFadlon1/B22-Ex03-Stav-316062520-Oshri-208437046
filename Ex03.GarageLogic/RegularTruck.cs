@@ -10,9 +10,17 @@
 
         public RegularTruck(string i_ModelName, string i_LicensePlateNumber, Customer i_Owner, string i_ManufacturerName,
             float i_CurrentAirPressure, bool i_IsDrivesRefrigeratedContents, float i_CargoVolume, float i_CurrrntFuel)
-            : base(i_ModelName, i_LicensePlateNumber, i_CurrrntFuel, k_MaxFuelTankVolume, i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_IsDrivesRefrigeratedContents, i_CargoVolume, false)
+            : base(i_ModelName, i_LicensePlateNumber, i_CurrrntFuel, k_MaxFuelTankVolume, i_Owner,
+                  i_ManufacturerName, i_CurrentAirPressure, i_IsDrivesRefrigeratedContents, i_CargoVolume)
         {
-            m_CurrentFuel = i_CurrrntFuel;
+            if (k_MaxFuelTankVolume > i_CurrrntFuel)
+            {
+                m_CurrentFuel = i_CurrrntFuel;
+            }
+            else
+            {
+                throw new ArgumentException("the amount of fuel is over the max tank volume of the truck.");
+            }
         }
 
         public override void LoadEnergy(float i_AmountOfFuel, EnergySourceType.eEnergySourceType i_EnergySource)
