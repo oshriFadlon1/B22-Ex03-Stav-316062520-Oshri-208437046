@@ -18,7 +18,7 @@
         public static Dictionary<string, Type> s_MotorcycleInformation = new Dictionary<string, Type>() { { string.Format(@"Press 1 for license type A.
 Press 2 for license type A1.
 Press 3 for license type B1.
-Press 4 for license type BB."), typeof(eMotorcycleLicense) }, { string.Format(@"Enter engine volume (in Cubic Centimeter): "), typeof(int) } };
+Press 4 for license type BB."), typeof(int) }, { string.Format(@"Enter engine volume (in Cubic Centimeter): "), typeof(int) } };
 
         private eMotorcycleLicense m_LicenseType;
         private int m_EngineVolume;

@@ -48,7 +48,6 @@
     <Compile Include="Customer.cs" />
     <Compile Include="ElectricCar.cs" />
     <Compile Include="ElectricMotorcycle.cs" />
-    <Compile Include="VehicleType.cs" />
     <Compile Include="EnergySourceType.cs" />
     <Compile Include="GarageManager.cs" />
     <Compile Include="Motorcycle.cs" />

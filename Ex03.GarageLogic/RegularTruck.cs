@@ -9,13 +9,13 @@
         private float m_CurrentFuel;
 
         public RegularTruck(string i_ModelName, string i_LicensePlateNumber, Customer i_Owner, string i_ManufacturerName,
-            float i_CurrentAirPressure, bool i_IsDrivesRefrigeratedContents, float i_CargoVolume, float i_CurrrntFuel)
-            : base(i_ModelName, i_LicensePlateNumber, i_CurrrntFuel, k_MaxFuelTankVolume, i_Owner,
+            float i_CurrentAirPressure, bool i_IsDrivesRefrigeratedContents, float i_CargoVolume, float i_CurrentFuel)
+            : base(i_ModelName, i_LicensePlateNumber, i_CurrentFuel, k_MaxFuelTankVolume, i_Owner,
                   i_ManufacturerName, i_CurrentAirPressure, i_IsDrivesRefrigeratedContents, i_CargoVolume)
         {
-            if (k_MaxFuelTankVolume > i_CurrrntFuel)
+            if (k_MaxFuelTankVolume > i_CurrentFuel)
             {
-                m_CurrentFuel = i_CurrrntFuel;
+                m_CurrentFuel = i_CurrentFuel;
             }
             else
             {

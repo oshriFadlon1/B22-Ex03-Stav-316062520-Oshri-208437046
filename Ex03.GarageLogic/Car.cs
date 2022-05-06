@@ -26,7 +26,7 @@
         public static Dictionary<string, Type> s_CarInformation = new Dictionary<string, Type>() {{string.Format(@"Press 1 for White color.
 Press 2 for Red color.
 Press 3 for Green color.
-Press 4 for Blue color."), typeof(eCarColor)}, { string.Format(@"Enter the number of doors (between 2-5): "), typeof(eNumberOfDoors) }};
+Press 4 for Blue color."), typeof(int)}, { string.Format(@"Enter the number of doors (between 2-5): "), typeof(int) }};
 
         private eCarColor m_CarColor;
         private eNumberOfDoors m_NumberOfDoors;

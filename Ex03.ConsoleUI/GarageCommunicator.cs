@@ -13,6 +13,7 @@
         {
             eMenuOption userChoice = eMenuOption.Start;
             Console.WriteLine("Hello! Welcome to the GARAGE!");
+            System.Threading.Thread.Sleep(2000);
             do
             {
                 PrintMenu();
@@ -33,12 +34,18 @@
                 {
                     Console.WriteLine(valueOutOfRangeException.Message);
                 }
+                catch (Exception exception)
+                {
+                    Console.WriteLine(exception.Message);
+                }
 
-            } while (userChoice != eMenuOption.Exit);
+            }
+            while (userChoice != eMenuOption.Exit);
         }
 
         private static void PrintMenu()
         {
+            System.Console.Clear();
             Console.WriteLine(@"Please enter your choice:
 1. Enter new vehicle
 2. Show the garage's vehicle license numbers list.
@@ -80,35 +87,43 @@
             }
             else
             {
-
                 AskUserLisencePlateNumber(out string lisencePlateNumber);
                 bool isVehicleExist = CheckIfVehicleExist(lisencePlateNumber);
 
                 if (i_UserChoice == eMenuOption.NewVehicle && !isVehicleExist)
                 {
-                    VehicleType.eTypeVehicles userVehicle = UserChooseHisVehicleType();
+                    VehicleCreator.eTypeVehicles userVehicle = UserChooseHisVehicleType();
                     AddVehicle(lisencePlateNumber, userVehicle);
                 }
-
-                if (isVehicleExist)
+                else if (isVehicleExist)
                 {
                     switch (i_UserChoice)
                     {
                         case eMenuOption.NewVehicle:
                             Console.WriteLine("This vehicle has already in the garage!");
+                            Console.WriteLine("the state of this vehicle has changed to in repair.");
+                            System.Threading.Thread.Sleep(1500);
                             m_GarageManager.ChangeVehicleState(lisencePlateNumber, VehicleState.eVehicleState.InRepair);
                             break;
                         case eMenuOption.ChangeVehicleState:
                             VehicleState.eVehicleState newState = UserChooseVehicleState();
                             m_GarageManager.ChangeVehicleState(lisencePlateNumber, newState);
+                            Console.WriteLine("The vehicle state has changed.");
+                            System.Threading.Thread.Sleep(1000);
                             break;
                         case eMenuOption.InflationWheelAirToMax:
                             m_GarageManager.InflateWheels(lisencePlateNumber);
+                            Console.WriteLine("All the wheels are inflated to max!");
+                            System.Threading.Thread.Sleep(1000);
                             break;
                         case eMenuOption.FuelVehicle:
                             FuelVehicle(lisencePlateNumber);
+                            Console.WriteLine("The vehicle is successfully refueled!");
+                            System.Threading.Thread.Sleep(1000);
                             break;
                         case eMenuOption.ChargingVehicle:
+                            Console.WriteLine("The vehicle is successfully charged!");
+                            System.Threading.Thread.Sleep(1000);
                             ChargeVehicle(lisencePlateNumber);
                             break;
                         case eMenuOption.FullDetailsOnVehicle:
@@ -123,18 +138,30 @@
             }
         }
 
-        private static VehicleType.eTypeVehicles UserChooseHisVehicleType()
+        private static VehicleCreator.eTypeVehicles UserChooseHisVehicleType()
         {
             bool legalInput = false;
-            VehicleType.eTypeVehicles userVehicle = VehicleType.eTypeVehicles.RegularCar;
+            VehicleCreator.eTypeVehicles userVehicle = VehicleCreator.eTypeVehicles.RegularCar;
+            string input;
+            int userChioce;
 
             do
             {
                 try
                 {
                     PrintAllTypeOfVehicles();
-                    userVehicle = (VehicleType.eTypeVehicles)Enum.Parse(typeof(VehicleType.eTypeVehicles),Console.ReadLine());
-                    legalInput = true;
+                    input = Console.ReadLine();
+                    userChioce = int.Parse(input);
+                    if (userChioce > 0 && userChioce <= Enum.GetNames(typeof(VehicleCreator.eTypeVehicles)).Length)
+                    {
+                        userVehicle = (VehicleCreator.eTypeVehicles)Enum.Parse(typeof(VehicleCreator.eTypeVehicles), input);
+                        legalInput = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("invalid input. try again.");
+                    }
+
                 }
                 catch (ArgumentException argumentException)
                 {
@@ -151,7 +178,7 @@
 
         }
 
-        private void AddVehicle(string i_lisencePlateNumber, VehicleType.eTypeVehicles i_UserVehicle)
+        private void AddVehicle(string i_lisencePlateNumber, VehicleCreator.eTypeVehicles i_UserVehicle)
         {
             Dictionary<string, Type> moreInfoNeedForUser;
             bool isInputCorrect = false;
@@ -185,10 +212,10 @@
                     }
                 }
 
-                isInputCorrect = true;
+                isInputCorrect = false;
             }
-            // we send all to garage manager -> creator -> create new vehicle and insert to dictionery
-            //AddNewVehicle(i_LisencePlateNumber); - LogicMethod
+
+            m_GarageManager.AddNewVehicle(i_UserVehicle, modelName, i_lisencePlateNumber, owner, manufactureName, currentAirPressure, userInfoNeeded, amountOfEnergy);
         }
 
         private bool CheckIfVehicleExist(string i_LisencePlateNumber)
@@ -235,11 +262,10 @@
                     }
 
                 }
-                catch 
+                catch
                 {
                     Console.WriteLine("Wrong Input. Please enter numbers only :");
                 }
-               
             }
             return amountOf;
         }
@@ -416,16 +442,17 @@
         public static void PrintAllTypeOfVehicles()
         {
             string vehicleType;
-            for (int i = 0; i < Enum.GetNames(typeof(VehicleType.eTypeVehicles)).Length; i++)
+            for (int i = 1; i <= Enum.GetNames(typeof(VehicleCreator.eTypeVehicles)).Length; i++)
             {
-                vehicleType = ((VehicleType.eTypeVehicles)i).ToString();
-                Console.WriteLine("To select {0} press {1}.", vehicleType, i + 1);
+                vehicleType = ((VehicleCreator.eTypeVehicles)i).ToString();
+                Console.WriteLine("To select {0} press {1}.", vehicleType, i);
             }
         }
 
         public void PrintAllDataOfCurrentVehicle(string i_LisencePlateNumber)
         {
             Console.WriteLine(m_GarageManager.GetDataOfCurrentVehicle(i_LisencePlateNumber));
+            System.Threading.Thread.Sleep(10000);
         }
 
         public void PrintAllLicenseNumbers()
@@ -466,6 +493,8 @@
             {
                 Console.WriteLine(licenseNumber);
             }
+
+            System.Threading.Thread.Sleep(7000);
         }
     }
 }

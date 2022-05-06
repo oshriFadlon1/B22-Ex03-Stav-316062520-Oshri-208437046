@@ -10,11 +10,11 @@
 
         public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
-            ManufacturerName = i_ManufacturerName;
+            m_ManufacturerName = i_ManufacturerName;
             if (i_CurrentAirPressure < i_MaxAirPressure)
             {
-                CurrentAirPressure = i_CurrentAirPressure;
-                MaxAirPressure = i_MaxAirPressure;
+                m_CurrentAirPressure = i_CurrentAirPressure;
+                m_MaxAirPressure = i_MaxAirPressure;
             }
             else
             {
@@ -82,7 +82,7 @@
         {
             return string.Format(@"Manufacturer name is: {0}.
 Current air pressure is: {1}.
-Max air pressure{2}.
+Max air pressure: {2}.
 ", m_ManufacturerName, m_CurrentAirPressure, m_MaxAirPressure);
         }
     }
