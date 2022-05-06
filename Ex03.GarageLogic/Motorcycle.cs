@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Ex03.GarageLogic
+﻿namespace Ex03.GarageLogic
 {
+    using System;
+    using System.Collections.Generic;
+
     public enum eMotorcycleLicense
     {
-        A,
+        A = 1,
         A1,
         B1,
         BB
@@ -18,6 +15,11 @@ namespace Ex03.GarageLogic
     {
         private const float k_MotorcycleMaxAirPressure = 31;
         private const int k_MotorcycleNumOfWheels = 2;
+        public static Dictionary<string, Type> s_MotorcycleInformation = new Dictionary<string, Type>() { { string.Format(@"Press 1 for license type A.
+Press 2 for license type A1.
+Press 3 for license type B1.
+Press 4 for license type BB."), typeof(eMotorcycleLicense) }, { string.Format(@"Enter engine volume (in Cubic Centimeter): "), typeof(int) } };
+
         private eMotorcycleLicense m_LicenseType;
         private int m_EngineVolume;
 

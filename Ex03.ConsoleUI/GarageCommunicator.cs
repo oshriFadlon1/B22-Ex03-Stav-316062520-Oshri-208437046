@@ -87,7 +87,6 @@
                 if (i_UserChoice == eMenuOption.NewVehicle && !isVehicleExist)
                 {
                     VehicleType.eTypeVehicles userVehicle = UserChooseHisVehicleType();
-                    
                     AddVehicle(lisencePlateNumber, userVehicle);
                 }
 
@@ -127,7 +126,7 @@
         private static VehicleType.eTypeVehicles UserChooseHisVehicleType()
         {
             bool legalInput = false;
-            VehicleType.eTypeVehicles userVehicle = VehicleType.eTypeVehicles.FuelCar;
+            VehicleType.eTypeVehicles userVehicle = VehicleType.eTypeVehicles.RegularCar;
 
             do
             {
@@ -137,73 +136,67 @@
                     userVehicle = (VehicleType.eTypeVehicles)Enum.Parse(typeof(VehicleType.eTypeVehicles),Console.ReadLine());
                     legalInput = true;
                 }
-                catch(ArgumentException argumentException)
+                catch (ArgumentException argumentException)
                 {
                     Console.WriteLine(argumentException.Message);
                 }
                 catch (Exception exception)
-                { 
+                {
                     Console.WriteLine(exception.Message);
                 }
-            } while (!legalInput) ;
+            }
+            while (!legalInput);
 
             return userVehicle;
 
-                
         }
 
         private void AddVehicle(string i_lisencePlateNumber, VehicleType.eTypeVehicles i_UserVehicle)
         {
+            Dictionary<string, Type> moreInfoNeedForUser;
+            bool isInputCorrect = false;
+            object userInput = null;
+            List<object> userInfoNeeded = new List<object>();
+
+            // to do: get out in method
             Console.WriteLine("Please enter vehicle model name: ");
             string modelName = Console.ReadLine();
-            while(modelName.Length == 0)
+
+            while (modelName.Length == 0)
             {
                 Console.WriteLine("Wrong insert. Please try again: ");
                 modelName = Console.ReadLine();
             }
 
             float amountOfEnergy = UserInsertAmountOfEnergy();
-            UserInsertDetailsOfWheels(out string manufactureName, out float currentAirPressure, out float maxAirPressure);
+            UserInsertDetailsOfWheels(out string manufactureName, out float currentAirPressure);
+            UserInsertHisPersonalDetails(out Customer owner);
 
-            Type[] kindOfVehicls = Assembly.GetAssembly(typeof(Vehicle)).GetTypes();
-            List<string> typesInEnum = VehicleType.getListOfTypes();
-            
-            string theUserVehicleType = typesInEnum[(int)i_UserVehicle];
-
-            Type foundType;
-            MemberInfo[] members;
-            foreach(Type kind in kindOfVehicls)
+            VehicleCreator.GetMoreInfo(i_UserVehicle, out moreInfoNeedForUser);
+            foreach (KeyValuePair<string, Type> entry in moreInfoNeedForUser)
             {
-                if (kind.IsSubclassOf(typeof(Vehicle)))
+                Console.WriteLine(entry.Key);
+                string userInputInString = Console.ReadLine();
+                while (!isInputCorrect)
                 {
-                    if (theUserVehicleType == kind.Name)
+                    try
                     {
-                        members = kind.GetMembers();
-                        
-
-                        foreach (MemberInfo member in members)
-                        {
-                            
-                        }
-
-                        foundType = kind;
-                        break;
+                        userInput = Convert.ChangeType(userInputInString, entry.Value);
+                        isInputCorrect = true;
+                        userInfoNeeded.Add(userInput);
+                    }
+                    catch (FormatException formatException)
+                    {
+                        Console.WriteLine(formatException.Message);
+                        userInputInString = Console.ReadLine();
+                        isInputCorrect = false;
                     }
                 }
+
+                isInputCorrect = true;
             }
-
-
-           
-
-
-            
+            // we send all to garage manager -> creator -> create new vehicle and insert to dictionery
             //AddNewVehicle(i_LisencePlateNumber); - LogicMethod
-        }
-
-        Type[] GetInheritedClasses(Type MyType)
-        {
-           
-            return Assembly.GetAssembly(MyType).GetTypes();
         }
 
         private bool CheckIfVehicleExist(string i_LisencePlateNumber)
@@ -239,8 +232,16 @@
                 try
                 {
                     amountOfEnergy = float.Parse(Console.ReadLine());
-                    //check positive amount - logic method
-                    legalAmoutOfEnergy = true;
+                    if (amountOfEnergy < 0)
+                    {
+                        legalAmoutOfEnergy = false;
+                        Console.WriteLine("the amount of energy can`t be negative.");
+                    }
+                    else
+                    {
+                        legalAmoutOfEnergy = true;
+                    }
+
                 }
                 catch (FormatException formatException)
                 {
@@ -251,6 +252,7 @@
                     Console.WriteLine(valueOutOfRangeException.Message);
                 }
             }
+
             return amountOfEnergy;
         }
 
@@ -411,3 +413,26 @@
         }
     }
 }
+
+//Type[] kindOfVehicls = Assembly.GetAssembly(typeof(Vehicle)).GetTypes();
+//List<string> typesInEnum = VehicleType.getListOfTypes();
+////string theUserVehicleType = typesInEnum[(int)i_UserVehicle];
+//string typeName = typesInEnum[((int)i_UserVehicle) - 1];
+//foreach(Type type in kindOfVehicls)
+//{
+//    if (type.IsSubclassOf(typeof(Vehicle)))
+//    {
+//        if (type.Name == typeName)
+//        {
+//            type.
+//        }
+//    }
+//}
+//    if (i_UserVehicle == VehicleType.eTypeVehicles.RegularCar || i_UserVehicle == VehicleType.eTypeVehicles.ElectricCar)
+//{
+//    foreach(KeyValuePair<string, Type> detail in Car.s_CarInformation)
+//    {
+//        Console.WriteLine(detail.Key);
+//        Type type = detail.Value.GetType();
+//    }
+//}

@@ -32,7 +32,7 @@
             return base.ToString() + string.Format(@"Car fuel is: {0}.
 Current amount of fuel is: {1}.
 Max volume of the fuel tank is: {2}.
-",k_CarSource,m_CurrentFuel,k_MaxFuelTankVolume);
+", k_CarSource, m_CurrentFuel, k_MaxFuelTankVolume);
         }
     }
 }

@@ -2,13 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+
     public class VehicleType
     {
         public enum eTypeVehicles
         {
-            FuelCar = 1,
-            FuelTruck,
-            FuelMotorcycle,
+            RegularCar = 1,
+            RegularTruck,
+            RegularMotorcycle,
             ElectricCar,
             ElectricMotorcycle,
         }
@@ -17,10 +18,11 @@
         {
             List<string> types = new List<string>();
 
-            foreach (string  name in Enum.GetNames(typeof(eTypeVehicles)))
+            foreach (string name in Enum.GetNames(typeof(eTypeVehicles)))
             {
                 types.Add(name);
             }
+
             return types;
         }
     }
