@@ -125,7 +125,7 @@
         {
             string currentDataOfVehicle = this.m_Owner.ToString() + string.Format(@"Model name is: {0}.
 License plate number is: {1}.
-The precent energy is:{2}.
+The precent energy is: {2}.
 ",m_ModelName,m_LicensePlateNumber,m_PrecentEnergy);
             foreach (Wheel wheel in m_CollectionOfWheels)
             {

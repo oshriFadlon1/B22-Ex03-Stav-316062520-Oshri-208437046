@@ -26,11 +26,20 @@
             }
         }
 
-        public void AddNewVehicle(Vehicle i_Vehicle)
+        public void AddNewVehicle(VehicleCreator.eTypeVehicles i_UserVehicle, string i_ModelName, string i_LicensePlateNumber,
+            Customer i_Owner, string i_ManufacturerName, float i_CurrentAirPressure, List<object> i_MoreInfoFromUser, float i_CurrentEnergy)
         {
             Vehicle newVehicle;
-            newVehicle = VehicleCreator.CreateNewVehicle();
-            m_VehiclesList.Add(newVehicle.LicensePlateNumber, newVehicle);
+            newVehicle = VehicleCreator.CreateNewVehicle(i_UserVehicle, i_ModelName, i_LicensePlateNumber,
+             i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_MoreInfoFromUser, i_CurrentEnergy);
+            if (newVehicle != null)
+            {
+                m_VehiclesList.Add(newVehicle.LicensePlateNumber, newVehicle);
+            }
+            else
+            {
+                throw new Exception("Something went wrong along the way, we're back on the menu.");
+            }
         }
 
         public void ChangeVehicleState(string i_LisencePlateNumber, VehicleState.eVehicleState i_NewState)
