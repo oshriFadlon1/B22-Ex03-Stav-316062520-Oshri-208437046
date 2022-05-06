@@ -158,18 +158,10 @@
             object userInput = null;
             List<object> userInfoNeeded = new List<object>();
 
-            // to do: get out in method
-            Console.WriteLine("Please enter vehicle model name: ");
-            string modelName = Console.ReadLine();
-
-            while (modelName.Length == 0)
-            {
-                Console.WriteLine("Wrong insert. Please try again: ");
-                modelName = Console.ReadLine();
-            }
-
-            float amountOfEnergy = UserInsertAmountOfEnergy();
-            UserInsertDetailsOfWheels(out string manufactureName, out float currentAirPressure);
+            UserInsertSpecificName(out string modelName, "model vehicle");
+            float amountOfEnergy = UserInsertAmountOf("vehicle energy");
+            UserInsertSpecificName(out string manufactureName, "wheel manufacturer");
+            float currentAirPressure = UserInsertAmountOf("wheels air pressure");
             UserInsertHisPersonalDetails(out Customer owner);
 
             VehicleCreator.GetMoreInfo(i_UserVehicle, out moreInfoNeedForUser);
@@ -222,39 +214,103 @@
             }
         }
 
-        private static float UserInsertAmountOfEnergy()
+        private static float UserInsertAmountOf(string i_DescriptionAmount)
         {
-            Console.WriteLine("Please enter the current amount of energy in the vehicle: ");
-            bool legalAmoutOfEnergy = false;
-            float amountOfEnergy = 0;
-            while (!legalAmoutOfEnergy)
+            Console.WriteLine("Please enter the current amount of {0}: ", i_DescriptionAmount);
+            bool legalAmout = false;
+            float amountOf = 0;
+            while (!legalAmout)
             {
                 try
                 {
-                    amountOfEnergy = float.Parse(Console.ReadLine());
-                    if (amountOfEnergy < 0)
+                    amountOf = float.Parse(Console.ReadLine());
+                    if (amountOf < 0)
                     {
-                        legalAmoutOfEnergy = false;
-                        Console.WriteLine("the amount of energy can`t be negative.");
+                        legalAmout = false;
+                        Console.WriteLine("the amount can`t be negative. Please try again: ");
                     }
                     else
                     {
-                        legalAmoutOfEnergy = true;
+                        legalAmout = true;
                     }
 
                 }
-                catch (FormatException formatException)
+                catch 
                 {
-                    Console.WriteLine(formatException.Message);
+                    Console.WriteLine("Wrong Input. Please enter numbers only :");
                 }
-                catch (ValueOutOfRangeException valueOutOfRangeException)
-                {
-                    Console.WriteLine(valueOutOfRangeException.Message);
-                }
+               
             }
-
-            return amountOfEnergy;
+            return amountOf;
         }
+
+        private static void UserInsertSpecificName(out string o_Name, string i_NameDescription)
+        {
+            bool legalName = false;
+            Console.WriteLine("Please enter the {0} name: ", i_NameDescription);
+            o_Name = Console.ReadLine();
+            while(!legalName)
+            {
+                if (o_Name.Length == 0)
+                {
+                    Console.WriteLine("You inserted an empty name. Please try again: ");
+                    o_Name = Console.ReadLine();
+                    continue;
+                }
+                else
+                {
+                    foreach (char letter in o_Name)
+                    {
+                        if (!char.IsLetter(letter))
+                        {
+                            Console.WriteLine("Wrong Input. Please enter letters only: ");
+                            o_Name = Console.ReadLine();
+                            continue;
+                        }
+                    }
+                }
+                legalName = true;
+            }
+        }
+
+        private static void UserInsertPhoneNumber(out string o_PhoneNumber)
+        {
+            bool legalPhoneNumber = false;
+            Console.WriteLine("Please enter your phone number (10 digits): ");
+            o_PhoneNumber = Console.ReadLine();
+            while(!legalPhoneNumber)
+            {
+                if(o_PhoneNumber.Length != 10)
+                {
+                    Console.WriteLine("your has to insert exactly 10 digits. Try again: ");
+                    o_PhoneNumber= Console.ReadLine();
+                    continue;
+                }
+                else
+                {
+                    foreach(char digit in o_PhoneNumber)
+                    {
+                        if (!char.IsDigit(digit))
+                        {
+                            Console.WriteLine("Wrong Input. Please enter digits only: ");
+                            o_PhoneNumber = Console.ReadLine();
+                            continue;
+                        }
+                    }
+                }
+                legalPhoneNumber = true;
+            }
+        }
+
+
+        private static void UserInsertHisPersonalDetails(out Customer o_Owner)
+        {
+            UserInsertSpecificName(out string ownerName, "vehicle owner");
+            UserInsertPhoneNumber(out string phoneNumber);
+            o_Owner = new Customer(ownerName, phoneNumber);
+        }
+
+
 
         private static VehicleState.eVehicleState UserChooseVehicleState()
         {

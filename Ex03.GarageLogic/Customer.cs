@@ -6,6 +6,12 @@
         private string m_PhoneNumber; // length == 10 and contain only numbers
         private VehicleState.eVehicleState m_CurrentVehicleState = VehicleState.eVehicleState.InRepair;
 
+        public Customer(string i_Name, string i_PhoneNumber)
+        {
+            Name = i_Name;
+            PhoneNumber = i_PhoneNumber;
+        }
+
         public string Name
         {
             get
