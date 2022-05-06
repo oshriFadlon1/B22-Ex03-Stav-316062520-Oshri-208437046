@@ -32,8 +32,8 @@ Press 4 for Blue color."), typeof(eCarColor)}, { string.Format(@"Enter the numbe
         private eNumberOfDoors m_NumberOfDoors;
 
         public Car(string i_ModelName, string i_LicensePlateNumber, float i_EnergyLeft, float i_MaxEnergy, Customer i_Owner,
-             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, bool i_IsElectricVehicle)
-            : base(i_ModelName, i_LicensePlateNumber, i_EnergyLeft, i_MaxEnergy, i_Owner, k_CarNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_CarMaxAirPressure, i_IsElectricVehicle)
+             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors)
+            : base(i_ModelName, i_LicensePlateNumber, i_EnergyLeft, i_MaxEnergy, i_Owner, k_CarNumOfWheels, i_ManufacturerName, i_CurrentAirPressure, k_CarMaxAirPressure)
         {
             CarColor = i_CarColor;
             NumberOfDoors = i_NumberOfDoors;

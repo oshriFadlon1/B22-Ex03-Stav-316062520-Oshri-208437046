@@ -5,10 +5,28 @@
 
     public class VehicleCreator
     {
-        public static Vehicle CreateNewVehicle()
+        public static Vehicle CreateNewVehicle(VehicleType.eTypeVehicles i_UserVehicle)
         {
-            Vehicle newVehcle;
-            // build new Vehicle in the swich
+            Vehicle newVehcle ;
+
+            switch (i_UserVehicle)
+            {
+                case VehicleType.eTypeVehicles.RegularCar:
+                    newVehcle = new RegularCar();
+                    break;
+                case VehicleType.eTypeVehicles.ElectricCar:
+                    newVehcle = new ElectricCar();
+                    break;
+                case VehicleType.eTypeVehicles.RegularMotorcycle:
+                    newVehcle = new RegularMotorcycle();
+                    break;
+                case VehicleType.eTypeVehicles.ElectricMotorcycle:
+                    newVehcle = new ElectricMotorcycle();
+                    break;
+                case VehicleType.eTypeVehicles.RegularTruck:
+                    newVehcle = new RegularTruck();
+                    break;
+            }
 
             return newVehcle;
         }

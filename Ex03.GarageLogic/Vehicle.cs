@@ -13,12 +13,13 @@
         private Customer m_Owner;
 
         public Vehicle(string i_ModelName, string i_LicensePlateNumber, float i_EnergyLeft, float i_MaxEnergy, Customer i_Owner,
-            int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure, bool i_IsElectricVehicle)
+            int i_NumOfWheels, string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
             ModelName = i_ModelName;
             LicensePlateNumber = i_LicensePlateNumber;
             PrecentEnergy = CalcPrecntageEnergy(i_EnergyLeft, i_MaxEnergy);
             Owner = i_Owner;
+
             m_CollectionOfWheels = new List<Wheel>(i_NumOfWheels);
             for (int i = 0; i < i_NumOfWheels; i++)
             {
@@ -100,7 +101,7 @@
         {
             if (i_AmountOfEnergy >= 0)
             {
-                if (i_MaxEnergy >= io_CurrentAmountOfEnergy + i_AmountOfEnergy) 
+                if (i_MaxEnergy >= io_CurrentAmountOfEnergy + i_AmountOfEnergy)
                 {
                     io_CurrentAmountOfEnergy += i_AmountOfEnergy;
                 }
@@ -132,12 +133,6 @@ The precent energy is:{2}.
             }
 
             return currentDataOfVehicle;
-        }
-
-        public static string getMyClass()
-        {
-            Assembly 
-            return Vehicle.getMyClass
         }
     }
 }
