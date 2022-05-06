@@ -1,8 +1,11 @@
 ﻿namespace Ex03.GarageLogic
 {
+    using System;
+    using System.Collections.Generic;
+
     public enum eCarColor
     {
-        White,
+        White = 1,
         Red,
         Green,
         Blue
@@ -20,6 +23,11 @@
     {
         private const float k_CarMaxAirPressure = 29;
         private const int k_CarNumOfWheels = 4;
+        public static Dictionary<string, Type> s_CarInformation = new Dictionary<string, Type>() {{string.Format(@"Press 1 for White color.
+Press 2 for Red color.
+Press 3 for Green color.
+Press 4 for Blue color."), typeof(eCarColor)}, { string.Format(@"Enter the number of doors (between 2-5): "), typeof(eNumberOfDoors) }};
+
         private eCarColor m_CarColor;
         private eNumberOfDoors m_NumberOfDoors;
 

@@ -28,7 +28,9 @@
 
         public void AddNewVehicle(Vehicle i_Vehicle)
         {
-           m_VehiclesList.Add(i_Vehicle.LicensePlateNumber,i_Vehicle);
+            Vehicle newVehicle;
+            newVehicle = VehicleCreator.CreateNewVehicle();
+            m_VehiclesList.Add(newVehicle.LicensePlateNumber, newVehicle);
         }
 
         public void ChangeVehicleState(string i_LisencePlateNumber, VehicleState.eVehicleState i_NewState)

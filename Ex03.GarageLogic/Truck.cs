@@ -1,9 +1,13 @@
 ﻿namespace Ex03.GarageLogic
 {
+    using System;
+    using System.Collections.Generic;
+
     public abstract class Truck : Vehicle
     {
         private const float k_TruckMaxAirPressure = 24;
         private const int k_TruckNumOfWheels = 16;
+        public static Dictionary<string, Type> s_TruckleInformation = new Dictionary<string, Type>() { { string.Format(@"Press y/n if the truck drives refrigerated stuff."), typeof(char) }, { string.Format(@"Enter cargo volume (in Cubic meter): "), typeof(float) } };
         private bool m_IsDrivesRefrigeratedContents;
         private float m_CargoVolume;
 

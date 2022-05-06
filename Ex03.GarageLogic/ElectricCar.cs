@@ -18,7 +18,7 @@
         public void ChargeTheBattery(float i_AmountOfTimeToCharge)
         {
             float hoursTocharge = i_AmountOfTimeToCharge / 60f;
-            Reload(hoursTocharge,ref m_BatteryTimeLeft,k_MaxBatteryTime);
+            Reload(hoursTocharge, ref m_BatteryTimeLeft, k_MaxBatteryTime);
         }
 
         public override void LoadEnergy(float i_AmountOfEnergy, EnergySourceType.eEnergySourceType i_EnergySource)
