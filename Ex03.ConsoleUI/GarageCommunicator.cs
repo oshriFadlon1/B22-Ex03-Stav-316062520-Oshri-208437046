@@ -36,8 +36,7 @@
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine(exception.Message);
-                    System.Threading.Thread.Sleep(1500);
+                    GeneralExceptionMessage();
                 }
 
             }
@@ -83,7 +82,7 @@
                 }
                 else
                 {
-                    legalInput= false;
+                    legalInput = false;
                 }
             }
         }
@@ -215,20 +214,19 @@
                 {
                     try
                     {
-                        if(entry.Value ==  typeof(bool))
+                        if (entry.Value == typeof(bool))
                         {
-
-                            if(userInputInString != "yes" && userInputInString != "no")
+                            if (userInputInString != "yes" && userInputInString != "no")
                             {
                                 Console.WriteLine("You have to insert yes/no");
                                 userInputInString = Console.ReadLine();
                                 continue;
                             }
-                            else if(userInputInString == "yes")
+                            else if (userInputInString == "yes")
                             {
                                 userInput = Convert.ChangeType(true, typeof(bool));
                             }
-                            else if(userInputInString == "no")
+                            else if (userInputInString == "no")
                             {
                                 userInput = Convert.ChangeType(false, typeof(bool));
                             }
@@ -259,6 +257,8 @@
             }
 
             m_GarageManager.AddNewVehicle(i_UserVehicle, modelName, i_lisencePlateNumber, owner, manufactureName, currentAirPressure, userInfoNeeded, amountOfEnergy);
+            Console.WriteLine("vehicle is created succefully.");
+            System.Threading.Thread.Sleep(2000);
         }
 
         private bool CheckIfVehicleExist(string i_LisencePlateNumber)
@@ -303,13 +303,13 @@
                     {
                         legalAmout = true;
                     }
-
                 }
                 catch
                 {
-                    Console.WriteLine("Wrong Input. Please enter numbers only :");
+                    GeneralExceptionMessage();
                 }
             }
+
             return amountOf;
         }
 
@@ -318,7 +318,7 @@
             bool legalName = false;
             Console.WriteLine("Please enter the {0} name: ", i_NameDescription);
             o_Name = Console.ReadLine();
-            while(!legalName)
+            while (!legalName)
             {
                 if (o_Name.Length == 0)
                 {
@@ -330,7 +330,7 @@
                 {
                     foreach (char letter in o_Name)
                     {
-                        if (!char.IsLetter(letter) && letter != ' ')
+                        if (!char.IsLetter(letter) && letter != ' ' && !char.IsDigit(letter))
                         {
                             Console.WriteLine("Wrong Input. Please enter letters only: ");
                             o_Name = Console.ReadLine();
@@ -338,6 +338,7 @@
                         }
                     }
                 }
+
                 legalName = true;
             }
         }
@@ -347,17 +348,17 @@
             bool legalPhoneNumber = false;
             Console.WriteLine("Please enter your phone number (10 digits): ");
             o_PhoneNumber = Console.ReadLine();
-            while(!legalPhoneNumber)
+            while (!legalPhoneNumber)
             {
-                if(o_PhoneNumber.Length != 10)
+                if (o_PhoneNumber.Length != 10)
                 {
                     Console.WriteLine("your has to insert exactly 10 digits. Try again: ");
-                    o_PhoneNumber= Console.ReadLine();
+                    o_PhoneNumber = Console.ReadLine();
                     continue;
                 }
                 else
                 {
-                    foreach(char digit in o_PhoneNumber)
+                    foreach (char digit in o_PhoneNumber)
                     {
                         if (!char.IsDigit(digit))
                         {
@@ -371,15 +372,12 @@
             }
         }
 
-
         private static void UserInsertHisPersonalDetails(out Customer o_Owner)
         {
             UserInsertSpecificName(out string ownerName, "vehicle owner");
             UserInsertPhoneNumber(out string phoneNumber);
             o_Owner = new Customer(ownerName, phoneNumber);
         }
-
-
 
         private static VehicleState.eVehicleState UserChooseVehicleState()
         {
@@ -474,7 +472,7 @@
         public static void PrintAllTypeOfFuel()
         {
             string fuelName;
-            for (int i = 1; i <= Enum.GetNames(typeof(EnergySourceType.eEnergySourceType)).Length; i++)
+            for (int i = 2; i <= Enum.GetNames(typeof(EnergySourceType.eEnergySourceType)).Length; i++)
             {
                 fuelName = ((EnergySourceType.eEnergySourceType)i).ToString();
                 Console.WriteLine("To select {0} press {1}.", fuelName, i);
@@ -511,14 +509,9 @@
                     userChoice = char.Parse(Console.ReadLine());
                     legalInput = true;
                 }
-                catch (FormatException formatException)
+                catch (Exception)
                 {
-                    FormatExceptionMessage(formatException);
-                }
-                catch (Exception exception)
-                {
-                    Console.WriteLine(exception.Message);
-                    System.Threading.Thread.Sleep(1500);
+                    GeneralExceptionMessage();
                 }
             }
 
@@ -550,46 +543,27 @@
         {
             System.Console.Clear();
             Console.WriteLine(formatException.Message);
-            System.Threading.Thread.Sleep(2500);
+            System.Threading.Thread.Sleep(4000);
         }
 
         private static void ValueOutOfRangeExceptionMessage(ValueOutOfRangeException valueOutOfRangeException)
         {
             System.Console.Clear();
             Console.WriteLine(valueOutOfRangeException.Message);
-            System.Threading.Thread.Sleep(2500);
+            System.Threading.Thread.Sleep(4000);
         }
 
         private static void ArgumentExceptionMessage(ArgumentException argumentException)
         {
             System.Console.Clear();
             Console.WriteLine(argumentException.Message);
-            System.Threading.Thread.Sleep(2500);
+            System.Threading.Thread.Sleep(4000);
         }
 
+        private static void GeneralExceptionMessage()
+        {
+            Console.WriteLine("something went wrong, try again.");
+            System.Threading.Thread.Sleep(1500);
+        }
     }
 }
-
-
-//Type[] kindOfVehicls = Assembly.GetAssembly(typeof(Vehicle)).GetTypes();
-//List<string> typesInEnum = VehicleType.getListOfTypes();
-////string theUserVehicleType = typesInEnum[(int)i_UserVehicle];
-//string typeName = typesInEnum[((int)i_UserVehicle) - 1];
-//foreach(Type type in kindOfVehicls)
-//{
-//    if (type.IsSubclassOf(typeof(Vehicle)))
-//    {
-//        if (type.Name == typeName)
-//        {
-//            type.
-//        }
-//    }
-//}
-//    if (i_UserVehicle == VehicleType.eTypeVehicles.RegularCar || i_UserVehicle == VehicleType.eTypeVehicles.ElectricCar)
-//{
-//    foreach(KeyValuePair<string, Type> detail in Car.s_CarInformation)
-//    {
-//        Console.WriteLine(detail.Key);
-//        Type type = detail.Value.GetType();
-//    }
-//}

@@ -24,7 +24,7 @@
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(Enum.GetNames(typeof(VehicleState.eVehicleState)).Length-1, 0);
+                    throw new ValueOutOfRangeException("vehicle state.", Enum.GetNames(typeof(VehicleState.eVehicleState)).Length, 1);
                 }
             }
             else

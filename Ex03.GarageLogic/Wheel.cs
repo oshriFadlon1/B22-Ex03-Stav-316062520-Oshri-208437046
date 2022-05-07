@@ -11,7 +11,7 @@
         public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
             m_ManufacturerName = i_ManufacturerName;
-            if (i_CurrentAirPressure < i_MaxAirPressure)
+            if (i_CurrentAirPressure <= i_MaxAirPressure)
             {
                 m_CurrentAirPressure = i_CurrentAirPressure;
                 m_MaxAirPressure = i_MaxAirPressure;
@@ -69,7 +69,7 @@
             }
             else
             {
-                throw new ValueOutOfRangeException(this.m_MaxAirPressure - this.m_CurrentAirPressure, 0);
+                throw new ValueOutOfRangeException("inflation of wheel.", this.m_MaxAirPressure - this.m_CurrentAirPressure, 0);
             }
         }
 

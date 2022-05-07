@@ -53,7 +53,15 @@ Press 4 for license type BB."), typeof(int) }, { string.Format(@"Enter engine vo
 
             set
             {
-                m_LicenseType = value;
+                if (value == eMotorcycleLicense.A || value == eMotorcycleLicense.A1
+                    || value == eMotorcycleLicense.B1 || value == eMotorcycleLicense.BB)
+                {
+                    m_LicenseType = value;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException("license type of motorcycle.", Enum.GetNames(typeof(eMotorcycleLicense)).Length, 1);
+                }
             }
         }
 
