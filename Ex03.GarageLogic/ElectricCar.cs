@@ -18,7 +18,7 @@
             }
             else
             {
-                throw new ArgumentException("the amount of Battery time is over the max of the battery in the car.");
+                throw new ArgumentException(string.Format("the amount of Battery time is over the max of the battery in the car ({0} hours).", k_MaxBatteryTime));
             }
         }
 
@@ -36,7 +36,7 @@
             }
             else
             {
-                throw new ArgumentException("incorrect energy source.");
+                throw new ArgumentException(string.Format("incorrect energy source. You should use {0}",k_CarSource));
             }
         }
 

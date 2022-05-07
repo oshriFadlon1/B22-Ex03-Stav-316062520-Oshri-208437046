@@ -24,19 +24,20 @@
                 }
                 catch (FormatException formatException)
                 {
-                    Console.WriteLine(formatException.Message);
+                    FormatExceptionMessage(formatException);
                 }
                 catch (ArgumentException argumentException)
                 {
-                    Console.WriteLine(argumentException.Message);
+                    ArgumentExceptionMessage(argumentException);
                 }
                 catch (Ex03.GarageLogic.ValueOutOfRangeException valueOutOfRangeException)
                 {
-                    Console.WriteLine(valueOutOfRangeException.Message);
+                    ValueOutOfRangeExceptionMessage(valueOutOfRangeException);
                 }
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception.Message);
+                    System.Threading.Thread.Sleep(1500);
                 }
 
             }
@@ -50,7 +51,7 @@
 1. Enter new vehicle
 2. Show the garage's vehicle license numbers list.
 3. Change vehicle state.
-4. Infale air in the vehicle wheels.
+4. Inflate air in the vehicle wheels.
 5. Fuel a regular vehicle.
 6. Charge an elecric vehicle.
 7. Show vehicle's full details.
@@ -66,6 +67,10 @@
             {
                 io_UserChoice = (eMenuOption)userChoice;
             }
+            else
+            {
+                legalInput = false;
+            }
 
             while (!legalInput)
             {
@@ -76,12 +81,21 @@
                     io_UserChoice = (eMenuOption)userChoice;
                     continue;
                 }
+                else
+                {
+                    legalInput= false;
+                }
             }
         }
 
         private void ExecuteUserChoice(eMenuOption i_UserChoice)
         {
-            if (i_UserChoice == eMenuOption.LicenseNumbersList)
+            if(i_UserChoice == eMenuOption.Exit)
+            {
+                Console.WriteLine("Goodbye!");
+                System.Threading.Thread.Sleep(1500);
+            }
+            else if (i_UserChoice == eMenuOption.LicenseNumbersList)
             {
                 PrintAllLicenseNumbers();
             }
@@ -122,9 +136,9 @@
                             System.Threading.Thread.Sleep(1000);
                             break;
                         case eMenuOption.ChargingVehicle:
+                            ChargeVehicle(lisencePlateNumber);
                             Console.WriteLine("The vehicle is successfully charged!");
                             System.Threading.Thread.Sleep(1000);
-                            ChargeVehicle(lisencePlateNumber);
                             break;
                         case eMenuOption.FullDetailsOnVehicle:
                             PrintAllDataOfCurrentVehicle(lisencePlateNumber);
@@ -134,6 +148,7 @@
                 else
                 {
                     Console.WriteLine("You inserted a license plate that does not exist in the system.");
+                    System.Threading.Thread.Sleep(1500);
                 }
             }
         }
@@ -165,7 +180,7 @@
                 }
                 catch (ArgumentException argumentException)
                 {
-                    Console.WriteLine(argumentException.Message);
+                    ArgumentExceptionMessage(argumentException);
                 }
                 catch (Exception exception)
                 {
@@ -200,13 +215,41 @@
                 {
                     try
                     {
-                        userInput = Convert.ChangeType(userInputInString, entry.Value);
+                        if(entry.Value ==  typeof(bool))
+                        {
+
+                            if(userInputInString != "yes" && userInputInString != "no")
+                            {
+                                Console.WriteLine("You have to insert yes/no");
+                                userInputInString = Console.ReadLine();
+                                continue;
+                            }
+                            else if(userInputInString == "yes")
+                            {
+                                userInput = Convert.ChangeType(true, typeof(bool));
+                            }
+                            else if(userInputInString == "no")
+                            {
+                                userInput = Convert.ChangeType(false, typeof(bool));
+                            }
+                        }
+                        else
+                        {
+                            userInput = Convert.ChangeType(userInputInString, entry.Value);
+                        }
+
                         isInputCorrect = true;
                         userInfoNeeded.Add(userInput);
                     }
                     catch (FormatException formatException)
                     {
-                        Console.WriteLine(formatException.Message);
+                        FormatExceptionMessage(formatException);
+                        userInputInString = Console.ReadLine();
+                        isInputCorrect = false;
+                    }
+                    catch (Exception generalException)
+                    {
+                        Console.WriteLine("Your input is invalid. Please try again: ");
                         userInputInString = Console.ReadLine();
                         isInputCorrect = false;
                     }
@@ -287,7 +330,7 @@
                 {
                     foreach (char letter in o_Name)
                     {
-                        if (!char.IsLetter(letter))
+                        if (!char.IsLetter(letter) && letter != ' ')
                         {
                             Console.WriteLine("Wrong Input. Please enter letters only: ");
                             o_Name = Console.ReadLine();
@@ -351,11 +394,11 @@
                 }
                 catch (FormatException formatException)
                 {
-                    Console.WriteLine(formatException.Message);
+                    FormatExceptionMessage(formatException);
                 }
                 catch (ValueOutOfRangeException valueOutOfRangeException)
                 {
-                    Console.WriteLine(valueOutOfRangeException.Message);
+                    ValueOutOfRangeExceptionMessage(valueOutOfRangeException);
                 }
             }
             while (!legalInput);
@@ -371,7 +414,7 @@
             {
                 try
                 {
-                    Console.WriteLine("Enter how much fuel you would like to refuel.");
+                    Console.WriteLine("Enter how much liters of fuel you would like to refuel:");
                     amountOfFuel = float.Parse(Console.ReadLine());
 
                     PrintAllTypeOfFuel();
@@ -381,15 +424,13 @@
                 }
                 catch (FormatException formatException)
                 {
-                    Console.WriteLine(formatException.Message);
-                }
-                catch (ArgumentException argumentException)
-                {
-                    Console.WriteLine(argumentException.Message);
+                    legalInput = false;
+                    FormatExceptionMessage(formatException);
                 }
                 catch (ValueOutOfRangeException rangeException)
                 {
-                    Console.WriteLine(rangeException.Message);
+                    legalInput = false;
+                    ValueOutOfRangeExceptionMessage(rangeException);
                 }
             }
         }
@@ -402,19 +443,20 @@
             {
                 try
                 {
-                    Console.WriteLine("Enter how much minutes to Charge you would like to recharge.");
+                    Console.WriteLine("Enter how much minutes to Charge you would like to recharge:");
                     amountOfEnergy = float.Parse(Console.ReadLine());
                     legalInput = true;
                     m_GarageManager.LoadEnergySource(i_LisencePlateNumber, amountOfEnergy, legalInput, EnergySourceType.eEnergySourceType.Electric);
                 }
                 catch (FormatException formatException)
                 {
-                    Console.WriteLine(formatException.Message);
+                    legalInput = false;
+                    FormatExceptionMessage(formatException);
                 }
                 catch (ValueOutOfRangeException rangeException)
                 {
                     legalInput = false;
-                    Console.WriteLine(rangeException.Message);
+                    ValueOutOfRangeExceptionMessage(rangeException);
                 }
             }
         }
@@ -471,11 +513,12 @@
                 }
                 catch (FormatException formatException)
                 {
-                    Console.WriteLine(formatException.Message);
+                    FormatExceptionMessage(formatException);
                 }
                 catch (Exception exception)
                 {
                     Console.WriteLine(exception.Message);
+                    System.Threading.Thread.Sleep(1500);
                 }
             }
 
@@ -489,15 +532,44 @@
                 m_GarageManager.GetAllLicenseNumbers(ref licenses);
             }
 
-            foreach (string licenseNumber in licenses)
+            if (licenses.Count == 0)
             {
-                Console.WriteLine(licenseNumber);
+                Console.WriteLine("we don't have vehicles in the garage that answer you request yet.");
             }
-
-            System.Threading.Thread.Sleep(7000);
+            else
+            {
+                foreach (string licenseNumber in licenses)
+                {
+                    Console.WriteLine(licenseNumber);
+                }
+            }
+            System.Threading.Thread.Sleep(6000);
         }
+
+        private static void FormatExceptionMessage(FormatException formatException)
+        {
+            System.Console.Clear();
+            Console.WriteLine(formatException.Message);
+            System.Threading.Thread.Sleep(2500);
+        }
+
+        private static void ValueOutOfRangeExceptionMessage(ValueOutOfRangeException valueOutOfRangeException)
+        {
+            System.Console.Clear();
+            Console.WriteLine(valueOutOfRangeException.Message);
+            System.Threading.Thread.Sleep(2500);
+        }
+
+        private static void ArgumentExceptionMessage(ArgumentException argumentException)
+        {
+            System.Console.Clear();
+            Console.WriteLine(argumentException.Message);
+            System.Threading.Thread.Sleep(2500);
+        }
+
     }
 }
+
 
 //Type[] kindOfVehicls = Assembly.GetAssembly(typeof(Vehicle)).GetTypes();
 //List<string> typesInEnum = VehicleType.getListOfTypes();

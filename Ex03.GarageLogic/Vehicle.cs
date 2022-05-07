@@ -97,13 +97,14 @@
 
         public abstract void LoadEnergy(float i_AmountOfEnergy, EnergySourceType.eEnergySourceType i_EnergySource);
 
-        public static void Reload(float i_AmountOfEnergy, ref float io_CurrentAmountOfEnergy, float i_MaxEnergy)
+        public void Reload(float i_AmountOfEnergy, ref float io_CurrentAmountOfEnergy, float i_MaxEnergy)
         {
             if (i_AmountOfEnergy >= 0)
             {
                 if (i_MaxEnergy >= io_CurrentAmountOfEnergy + i_AmountOfEnergy)
                 {
                     io_CurrentAmountOfEnergy += i_AmountOfEnergy;
+                    PrecentEnergy = CalcPrecntageEnergy(io_CurrentAmountOfEnergy, i_MaxEnergy);
                 }
                 else
                 {
@@ -127,9 +128,12 @@
 License plate number is: {1}.
 The precent energy is: {2}.
 ",m_ModelName,m_LicensePlateNumber,m_PrecentEnergy);
+            int countWheelInCollection = 1;
             foreach (Wheel wheel in m_CollectionOfWheels)
             {
+                currentDataOfVehicle += String.Format("Data of wheel number {0}:\n", countWheelInCollection);
                 currentDataOfVehicle += wheel.ToString();
+                countWheelInCollection++;
             }
 
             return currentDataOfVehicle;
