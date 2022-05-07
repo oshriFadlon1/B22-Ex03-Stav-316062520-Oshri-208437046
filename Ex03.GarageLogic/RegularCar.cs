@@ -12,7 +12,7 @@
             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, float i_CurrentFuel)
             : base(i_ModelName, i_LicensePlateNumber, i_CurrentFuel, k_MaxFuelTankVolume, i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_CarColor, i_NumberOfDoors)
         {
-            if (k_MaxFuelTankVolume > i_CurrentFuel)
+            if (k_MaxFuelTankVolume >= i_CurrentFuel)
             {
                 m_CurrentFuel = i_CurrentFuel;
             }

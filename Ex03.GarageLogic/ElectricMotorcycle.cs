@@ -13,7 +13,7 @@
             : base(i_ModelName, i_LicensePlateNumber, i_BatteryTimeLeft, k_MaxBatteryTime, i_Owner,
                   i_ManufacturerName,i_CurrentAirPressure, i_LicenseType, i_EngineVolume)
         {
-            if (k_MaxBatteryTime > i_BatteryTimeLeft)
+            if (k_MaxBatteryTime >= i_BatteryTimeLeft)
             {
                 m_BatteryTimeLeft = i_BatteryTimeLeft;
             }

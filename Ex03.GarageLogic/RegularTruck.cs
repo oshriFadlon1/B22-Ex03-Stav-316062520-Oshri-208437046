@@ -13,7 +13,7 @@
             : base(i_ModelName, i_LicensePlateNumber, i_CurrentFuel, k_MaxFuelTankVolume, i_Owner,
                   i_ManufacturerName, i_CurrentAirPressure, i_IsDrivesRefrigeratedContents, i_CargoVolume)
         {
-            if (k_MaxFuelTankVolume > i_CurrentFuel)
+            if (k_MaxFuelTankVolume >= i_CurrentFuel)
             {
                 m_CurrentFuel = i_CurrentFuel;
             }

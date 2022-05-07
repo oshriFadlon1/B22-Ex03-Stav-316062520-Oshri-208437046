@@ -48,7 +48,15 @@ Press 4 for Blue color."), typeof(int)}, { string.Format(@"Enter the number of d
 
             set
             {
-                m_CarColor = value;
+                if (value == eCarColor.Green || value == eCarColor.Blue
+                    || value == eCarColor.White || value == eCarColor.Red)
+                {
+                    m_CarColor = value;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException("color of the car.", Enum.GetNames(typeof(eCarColor)).Length, 1);
+                }
             }
         }
 
@@ -61,7 +69,14 @@ Press 4 for Blue color."), typeof(int)}, { string.Format(@"Enter the number of d
 
             set
             {
-                m_NumberOfDoors = value;
+                if ((int)value >= 2 && (int)value <= 5)
+                {
+                    m_NumberOfDoors = value;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException("number of doors of the car.", 5, 2);
+                }
             }
         }
 

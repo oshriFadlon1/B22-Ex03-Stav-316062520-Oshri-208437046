@@ -108,7 +108,7 @@
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(i_MaxEnergy - io_CurrentAmountOfEnergy, 0);
+                    throw new ValueOutOfRangeException("vehicle energy.", i_MaxEnergy - io_CurrentAmountOfEnergy, 0);
                 }
             }
             else

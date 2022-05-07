@@ -12,7 +12,7 @@
             string i_ManufacturerName, float i_CurrentAirPressure, eCarColor i_CarColor, eNumberOfDoors i_NumberOfDoors, float i_BatteryTimeLeft)
             : base(i_ModelName, i_LicensePlateNumber, i_BatteryTimeLeft, k_MaxBatteryTime, i_Owner, i_ManufacturerName, i_CurrentAirPressure, i_CarColor, i_NumberOfDoors)
         {
-            if (k_MaxBatteryTime > i_BatteryTimeLeft)
+            if (k_MaxBatteryTime >= i_BatteryTimeLeft)
             {
                 m_BatteryTimeLeft = i_BatteryTimeLeft;
             }
