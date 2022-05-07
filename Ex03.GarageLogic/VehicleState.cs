@@ -17,14 +17,14 @@
             o_DesiredResult = eVehicleState.InRepair;
             if (int.TryParse(i_UserInput, out int vehicleState))
             {
-                if (o_DesiredResult == eVehicleState.InRepair || o_DesiredResult == eVehicleState.Fixed || o_DesiredResult == eVehicleState.PaidUp)
+                if (vehicleState == (int)eVehicleState.InRepair || vehicleState == (int)eVehicleState.Fixed || vehicleState == (int)eVehicleState.PaidUp)
                 {
                     o_DesiredResult = (eVehicleState)vehicleState;
                     isTryParsing = true;
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(Enum.GetNames(typeof(VehicleState.eVehicleState)).Length, 0);
+                    throw new ValueOutOfRangeException(Enum.GetNames(typeof(VehicleState.eVehicleState)).Length-1, 0);
                 }
             }
             else

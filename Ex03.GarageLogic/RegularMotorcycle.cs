@@ -19,7 +19,7 @@
             }
             else
             {
-                throw new ArgumentException("the amount of fuel is over the max tank volume of the motorcycle.");
+                throw new ArgumentException(string.Format("the amount of fuel is over the max tank volume of the motorcycle ({0} liters).", k_MaxFuelTankVolume));
             }
         }
 
@@ -31,7 +31,7 @@
             }
             else
             {
-                throw new ArgumentException("incorrect energy source.");
+                throw new ArgumentException(string.Format("incorrect energy source. You should use {0}", k_MotorcycleSource));
             }
         }
 
