@@ -4,9 +4,9 @@
 
     internal class Wheel
     {
-        string m_ManufacturerName;
-        float  m_CurrentAirPressure;
-        float  m_MaxAirPressure;
+        private string m_ManufacturerName;
+        private float  m_CurrentAirPressure;
+        private float m_MaxAirPressure;
 
         public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
@@ -22,7 +22,7 @@
             }
         }
 
-        string ManufacturerName
+        public string ManufacturerName
         {
             get
             {
@@ -35,7 +35,7 @@
             }
         }
 
-        float CurrentAirPressure
+        public float CurrentAirPressure
         {
             get
             {
@@ -48,7 +48,7 @@
             }
         }
 
-        float MaxAirPressure
+        public float MaxAirPressure
         {
             get
             {
