@@ -565,24 +565,24 @@
             System.Threading.Thread.Sleep(6000);
         }
 
-        private static void FormatExceptionMessage(FormatException formatException)
+        private static void FormatExceptionMessage(FormatException i_FormatException)
         {
             System.Console.Clear();
-            Console.WriteLine(formatException.Message);
+            Console.WriteLine(i_FormatException.Message);
             System.Threading.Thread.Sleep(4000);
         }
 
-        private static void ValueOutOfRangeExceptionMessage(ValueOutOfRangeException valueOutOfRangeException)
+        private static void ValueOutOfRangeExceptionMessage(ValueOutOfRangeException i_ValueOutOfRangeException)
         {
             System.Console.Clear();
-            Console.WriteLine(valueOutOfRangeException.Message);
+            Console.WriteLine(i_ValueOutOfRangeException.Message);
             System.Threading.Thread.Sleep(4000);
         }
 
-        private static void ArgumentExceptionMessage(ArgumentException argumentException)
+        private static void ArgumentExceptionMessage(ArgumentException i_ArgumentException)
         {
             System.Console.Clear();
-            Console.WriteLine(argumentException.Message);
+            Console.WriteLine(i_ArgumentException.Message);
             System.Threading.Thread.Sleep(4000);
         }
 
