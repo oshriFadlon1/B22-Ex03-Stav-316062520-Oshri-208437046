@@ -131,7 +131,7 @@ The precent energy is: {2}.
             int countWheelInCollection = 1;
             foreach (Wheel wheel in m_CollectionOfWheels)
             {
-                currentDataOfVehicle += String.Format("Data of wheel number {0}:\n", countWheelInCollection);
+                currentDataOfVehicle += string.Format("Data of wheel number {0}:\n", countWheelInCollection);
                 currentDataOfVehicle += wheel.ToString();
                 countWheelInCollection++;
             }
