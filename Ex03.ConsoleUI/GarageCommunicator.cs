@@ -315,7 +315,7 @@
 
         private static void UserInsertSpecificName(out string o_Name, string i_NameDescription)
         {
-            bool legalName = false;
+            bool legalName = false, isWithoutSigns = true;
             Console.WriteLine("Please enter the {0} name: ", i_NameDescription);
             o_Name = Console.ReadLine();
             while (!legalName)
@@ -332,20 +332,29 @@
                     {
                         if (!char.IsLetter(letter) && letter != ' ' && !char.IsDigit(letter))
                         {
+                            isWithoutSigns = false;
                             Console.WriteLine("Wrong Input. Please enter letters only: ");
                             o_Name = Console.ReadLine();
-                            continue;
+                            break;
                         }
                     }
                 }
 
-                legalName = true;
+                if (isWithoutSigns)
+                {
+                    legalName = true;
+                }
+                else
+                {
+                    isWithoutSigns = true;
+                }
+
             }
         }
 
         private static void UserInsertPhoneNumber(out string o_PhoneNumber)
         {
-            bool legalPhoneNumber = false;
+            bool legalPhoneNumber = false, isDigitsOnly = true;
             Console.WriteLine("Please enter your phone number (10 digits): ");
             o_PhoneNumber = Console.ReadLine();
             while (!legalPhoneNumber)
@@ -362,13 +371,23 @@
                     {
                         if (!char.IsDigit(digit))
                         {
+                            isDigitsOnly = false;
                             Console.WriteLine("Wrong Input. Please enter digits only: ");
                             o_PhoneNumber = Console.ReadLine();
-                            continue;
+                            break;
                         }
+
                     }
                 }
-                legalPhoneNumber = true;
+
+                if (isDigitsOnly)
+                {
+                    legalPhoneNumber = true;
+                }
+                else
+                {
+                    isDigitsOnly = true;
+                }
             }
         }
 
@@ -507,7 +526,14 @@
                     Console.WriteLine("Would you like to filter by the repair condition of the vehicle?");
                     Console.WriteLine("enter y for yes and n for no.");
                     userChoice = char.Parse(Console.ReadLine());
-                    legalInput = true;
+                    if (userChoice == 'n' || userChoice == 'y')
+                    {
+                        legalInput = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wrong character! let's try again.");
+                    }
                 }
                 catch (Exception)
                 {
